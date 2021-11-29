@@ -15,7 +15,7 @@ ReactDOM.render(
     // <Provider store={store}>
       <ThemeProvider theme={darkTheme}>
         <DndProvider backend={HTML5Backend}>
-          <BrowserRouter>
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
             <React.StrictMode>
               <App />
             </React.StrictMode>
