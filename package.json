@@ -2,6 +2,7 @@
   "name": "miranda",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://danielrevenga.github.io/Miranda_Management/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.15.0",
@@ -19,13 +20,13 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:css": "stylelint '.src/**/*.js",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "lint:css": "stylelint '.src/**/*.js"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +48,6 @@
   },
   "devDependencies": {
     "gh-pages": "^3.2.3"
-  },
-  "homepage": "https://danielrevenga.github.io/Miranda_Management/"
+  }
+  
 }
