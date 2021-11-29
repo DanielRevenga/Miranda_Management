@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/Miranda_Management/static/js/main.77bf117f.chunk.js",
-    "main.js.map": "/Miranda_Management/static/js/main.77bf117f.chunk.js.map",
+    "main.js": "/Miranda_Management/static/js/main.1b02cedf.chunk.js",
+    "main.js.map": "/Miranda_Management/static/js/main.1b02cedf.chunk.js.map",
     "runtime-main.js": "/Miranda_Management/static/js/runtime-main.64a3cfd4.js",
     "runtime-main.js.map": "/Miranda_Management/static/js/runtime-main.64a3cfd4.js.map",
     "static/js/2.5f2b1919.chunk.js": "/Miranda_Management/static/js/2.5f2b1919.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.64a3cfd4.js",
     "static/js/2.5f2b1919.chunk.js",
-    "static/js/main.77bf117f.chunk.js"
+    "static/js/main.1b02cedf.chunk.js"
   ]
 }
