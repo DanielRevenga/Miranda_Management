@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import Layout from './layout/Layout';
+import Layout from './components/layout/Layout';
 
-import Dashboard from "./pages/Dashboard";
-import Rooms from "./pages/Rooms";
-import Bookings from "./pages/Bookings";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import { AuthContext } from "../contexts/auth-context";
-import { PrivateRoute } from "./PrivateRoute";
-import Users from "./pages/Users";
+import Dashboard from "./components/pages/Dashboard";
+import Rooms from "./components/pages/Rooms";
+import Bookings from "./components/pages/Bookings";
+import Contact from "./components/pages/Contact";
+import Login from "./components/pages/Login";
+import { AuthContext } from "./contexts/auth-context";
+import { PrivateRoute } from "./components/PrivateRoute";
+import Users from "./components/pages/Users";
 
 const GlobalStyle = createGlobalStyle`
   *{

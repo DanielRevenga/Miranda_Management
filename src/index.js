@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from 'styled-components';
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import App from './components/App';
+import App from './App';
 import { darkTheme } from "./styles/themes";
 import { DndProvider } from 'react-dnd';
 // import store from "./store.js";
