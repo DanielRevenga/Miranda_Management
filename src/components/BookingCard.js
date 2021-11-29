@@ -3,8 +3,8 @@ import { useDrag, useDrop } from 'react-dnd';
 import { ButtonInfo, ButtonSuccess } from '../styles/components/Button';
 import { ItemTypes } from './ItemTypes';
 
-export function RoomCard ({ id, index, number, room_type, amenities, price, offer_price, 
-    status, img, moveCard }) {
+export function BookingCard ({ id, index, first_name, last_name, order_date, check_in, 
+    check_out, room_type_number, room_type_type, special_request, moveCard }) {
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
@@ -64,14 +64,14 @@ export function RoomCard ({ id, index, number, room_type, amenities, price, offe
     drag(drop(ref));
     return (
         <tr ref={ref} style={{opacity}} data-handler-id={handlerId}>
-            <td>--</td>
-            <td>--</td>
-			<td>{number}</td>
-            <td>{room_type}</td>
-            <td>{amenities}</td>
-            <td>{price}</td>
-            <td>{offer_price}</td>
-            <td><ButtonSuccess>{status}</ButtonSuccess></td>
+            <td></td>
+			<td>{first_name} {last_name} </td>
+            <td>{order_date}</td>
+            <td>{check_in}</td>
+            <td>{check_out}</td>
+            <td><ButtonInfo>View Notes</ButtonInfo></td>
+            <td>{room_type_type} - {room_type_number}</td>
+            <td><ButtonSuccess>Booked</ButtonSuccess></td>
             <td><i class="fas fa-ellipsis-v"></i></td>
 		</tr>
         );

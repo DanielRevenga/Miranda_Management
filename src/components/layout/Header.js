@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../../contexts/auth-context";
+
 // style={{border:"1px solid blue"}}
 const StyledHeader = styled.header`
     display: flex;
@@ -15,6 +16,7 @@ const StyledHeader = styled.header`
     position: fixed;
     left: 17vw;
     top: 0;
+    // font-family: ${props => props.theme.poppins};
 
     nav, h1 {
         font-size: 1.4em;

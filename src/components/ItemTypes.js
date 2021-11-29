@@ -1,4 +1,4 @@
 export const ItemTypes = {
-    ROOMCARD: 'roomCard',
+    CARD: 'card',
   }
   

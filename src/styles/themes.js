@@ -10,5 +10,6 @@ export const darkTheme = {
     old_std_tt: "Old Standard TT, serif",
     poppins: "Poppins, sans-serif",
     roboto: "Roboto, sans-serif",
+    font: "'Poppins', Roboto",
 
 };

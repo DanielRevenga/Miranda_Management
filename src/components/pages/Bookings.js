@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { ButtonError, ButtonInfo, ButtonSuccess} from "../../styles/components/Button";
 import { MainContainer } from "../../styles/components/MainContainer";
-import { rooms_data } from "../../data/rooms_data";
+import { bookings_data } from "../../data/bookings_data";
 import update from "immutability-helper";
-import { RoomCard } from "../RoomCard";
+import { BookingCard } from "../BookingCard";
 
 const StyledRooms = styled.div`
         background-color: ${props => props.theme.main_color_2};
@@ -48,29 +48,30 @@ const StyledTable = styled.table`
         &:first-child{
             padding-left: 25px;
         }
+        i{
+            cursor: pointer;
+        }
     }
 `;
 
 export default function Bookings() {
    
-    const [roomCards, setRoomCards] = useState(rooms_data);
-    console.log(rooms_data);
+    const [cards, setCards] = useState(bookings_data);
+    console.log(bookings_data);
 
-    // setRoomCards(rooms_data);
-
-    const moveRoomCard = useCallback((dragIndex, hoverIndex) => {
-        const dragRoomCard = roomCards[dragIndex];
-        setRoomCards(update(roomCards, {
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        const dragCard = cards[dragIndex];
+        setCards(update(cards, {
             $splice: [
                 [dragIndex, 1],
-                [hoverIndex, 0, dragRoomCard],
+                [hoverIndex, 0, dragCard],
             ],
         }));
-    }, [roomCards]);
+    }, [cards]);
 
-    const renderRoomCard = (card, index) => {
+    const renderCard = (card, index) => {
         return (
-            <RoomCard 
+            <BookingCard 
                 key={card.id}
                 index={index}
                 id={card.id}
@@ -82,12 +83,12 @@ export default function Bookings() {
                 room_type_number={card.room_type_number}
                 room_type_type={card.room_type_type}
                 special_request={card.special_request}
-                moveCard={moveRoomCard}/>
+                moveCard={moveCard}/>
         );
     };
 
     return (
-        <MainContainer>Rooms
+        <MainContainer>
             <StyledTable>
                 {/* TABLE HEAD */}
                 <thead>
@@ -106,18 +107,7 @@ export default function Bookings() {
 
                 {/* TABLE BODY */}
                 <tbody>
-                    {/* <tr>
-                        <td></td>
-                        <td>Guest</td>
-                        <td>Order Date</td>
-                        <td>Check In</td>
-                        <td>Check out</td>
-                        <td><ButtonInfo>aaa</ButtonInfo></td>
-                        <td>Room Type</td>
-                        <td><ButtonSuccess>aaa</ButtonSuccess></td>
-                        <td></td>
-                    </tr> */}
-                    {roomCards.map((card, i) => renderRoomCard(card, i))}
+                    {cards.map((card, i) => renderCard(card, i))}
                 </tbody>
             </StyledTable>
 
