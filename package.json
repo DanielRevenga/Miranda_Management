@@ -2,7 +2,7 @@
   "name": "miranda",
   "version": "0.1.0",
   "private": true,
-"homepage": ".",
+  "homepage": "https://DanielRevenga.github.io/Miranda_Management/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.15.0",
@@ -26,7 +26,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:css": "stylelint '.src/**/*.js"
+    "lint:css": "stylelint '.src/**/*.js",
+
+    "build-localhost": "PUBLIC_URL=/ react-scripts build"
   },
   "eslintConfig": {
     "extends": [
