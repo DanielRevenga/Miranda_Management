@@ -150,7 +150,7 @@ function SideBarMenu() {
             {/* LOGO */}
             <Logo>
                 <div className="logo">
-                    <img src={"/public/img/hotel_logo.png"} alt="" />
+                    {/* <img src="/public/img/hotel_logo.png" alt="" /> */}
                     <img src="/img/hotel_logo.png" alt="" width="100%" height="100%" />
                 </div>
                 <div className="titles">
