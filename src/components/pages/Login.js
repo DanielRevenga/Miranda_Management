@@ -183,19 +183,19 @@ export default function Login() {
                             <Icon>
                                 <div><i className="fas fa-user fa-fw"></i></div>
                             </Icon>
-                            <input type="text" placeholder="username" onChange={nameChangehandler} />                           
+                            <input name="userName" type="text" placeholder="username" onChange={nameChangehandler} />                           
                         </FormControl>
                         <FormControl>
                             <Icon>
                                 <div><i className="fas fa-key fa-fw"></i></div>
                             </Icon>
-                            <input type="password" placeholder="password" onChange={passChangeHandler} />
+                            <input name="userPass" type="password" placeholder="password" onChange={passChangeHandler} />
                         </FormControl>
                         <FormControl w="4" display="flex" mr="20px" alignI="center">
                             <input type="checkbox" />
                             <div>Remember Me</div>
                         </FormControl>
-                        <ButtonGreen onClick={handleSubmit}>Login</ButtonGreen>
+                        <ButtonGreen type="submit" onClick={handleSubmit}>Login</ButtonGreen>
                     </form>
                 </CardBody>
                 <CardFooter>

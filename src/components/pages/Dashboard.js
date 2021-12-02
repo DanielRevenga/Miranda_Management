@@ -105,7 +105,6 @@ const User = styled.div`
 
 function Dashboard() {
    
-
     return (
         <StyledDashboard>
             {/* CARDS */}

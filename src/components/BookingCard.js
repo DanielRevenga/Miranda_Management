@@ -69,7 +69,7 @@ export function BookingCard ({ id, index, first_name, last_name, order_date, che
             <td>{order_date}</td>
             <td>{check_in}</td>
             <td>{check_out}</td>
-            <td><ButtonInfo>View Notes</ButtonInfo></td>
+            <td><ButtonInfo fontSize={1}>View Notes</ButtonInfo></td>
             <td>{room_type_type} - {room_type_number}</td>
             <td><ButtonSuccess>Booked</ButtonSuccess></td>
             <td><i class="fas fa-ellipsis-v"></i></td>

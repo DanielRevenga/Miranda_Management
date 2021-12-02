@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Layout from './components/layout/Layout';
 
@@ -59,7 +59,7 @@ function App() {
   const [logged, setLogged] = useState(x);
 
   return (
-    <>
+    <><BrowserRouter basename={process.env.PUBLIC_URL}>
     <AuthContext.Provider value={{ logged, setLogged }}>
       <GlobalStyle  />    
         <Layout logged={logged}>
@@ -92,13 +92,13 @@ function App() {
                 <PrivateRoute>
                   <Users />
                 </PrivateRoute>
-              } />
+              } />Dashboard
 
               <Route path="/login" element={<Login />} />      
             </Routes>
         </Layout>
           
-      </AuthContext.Provider>
+      </AuthContext.Provider></BrowserRouter>
     </>
   );
 }

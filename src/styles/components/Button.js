@@ -7,6 +7,7 @@ export const Button = styled.button`
     background-color: ${props => props.bg || "#fff" };
     color: ${props => props.color || "#111"};
     text-transform: capitalize;
+    font-size: ${props => props.fontSize}em;
     cursor: pointer;
 
     &:hover{
@@ -19,6 +20,7 @@ export const Button = styled.button`
 export const ButtonInfo = styled(Button)`
     color: #fff;
     background-color: #3D3D3D;
+    font-size: "40px !important";
 
     &:hover{
         color: #3D3D3D;
