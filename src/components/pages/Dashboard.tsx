@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { ButtonError, ButtonInfo, ButtonSuccess} from "../../styles/components/Button";
+import { ButtonError } from "../../styles/components/Button";
 import { MainContainer } from "../../styles/components/MainContainer";
 
 const StyledDashboard = styled(MainContainer)`
@@ -116,7 +115,7 @@ const User = styled.div`
 
 function Dashboard() {
    
-    return (
+    return (<>
         <StyledDashboard>
             {/* CARDS */}
             <Card display="flex">
@@ -217,7 +216,7 @@ function Dashboard() {
                 </Review>
             </Card>
         </StyledDashboard>  
-    );
+        </>);
 }
 
 export default Dashboard;

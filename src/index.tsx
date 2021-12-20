@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from 'styled-components';
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -8,8 +7,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import App from './App';
 import { darkTheme } from "./styles/themes";
 import { DndProvider } from 'react-dnd';
-import { AuthProvider } from './contexts/AuthContext';
-import store from "./store.js";
+import { AuthProvider } from './context/AuthContext';
+import store from "./store";
 // import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -23,7 +22,7 @@ ReactDOM.render(
           </AuthProvider>
         </DndProvider>
       </ThemeProvider>
-    </Provider>
+     </Provider>
     ,
   document.getElementById('root')
 );

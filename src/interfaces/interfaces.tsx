@@ -16,14 +16,14 @@ export interface Booking {
     id: number;
     first_name: string ;
     last_name: string;
-    email: string ;
+    order_date: string;
     check_in: string ;
     check_out: string ;
+    special_request: string;
     room_type_type: string;
     room_type_number: string;
-    order_date: string;
+    email: string ;
     discount: number ;
-    special_request: string;
 }
 
 export interface User {
@@ -39,12 +39,31 @@ export interface User {
     state: string;
 }
 
+export interface Contact{
+    id: number;
+    name: string;
+}
+
+export interface AuthState{
+    auth: boolean;
+}
+
 export interface UsersState {
-    usersList: Array<User>,
-    lastFetch: string
+    usersList: User[];
+    lastFetch: string;
 }
 
 export interface BookingsState {
-    bookingsList: Booking[],
-    lastFetch: string
+    bookingsList: Booking[];
+    lastFetch: string;
+}
+
+export interface RoomsState {
+    roomsList: Room[];
+    lastFetch: string;
+}
+
+export interface ContactsState {
+    contactsList: Contact[];
+    lastFetch: string;
 }
