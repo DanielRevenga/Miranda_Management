@@ -10,7 +10,17 @@ const StyledDashboard = styled(MainContainer)`
     gap: 2%;
 `;
 
-const Card = styled.div`
+interface CardProps {
+    row?: string;
+    rowSpan?: string;
+    column?: string;
+    columnSpan?: string;
+    bg?: any;
+    display?: any;
+    justify?: any;
+}
+
+const Card = styled.div< CardProps >`
     border-radius: 16px;
     grid-row: ${props => props.row} / span ${props => props.rowSpan};
     grid-column: ${props => props.column} / span ${props => props.columnSpan};
@@ -41,8 +51,9 @@ const Card = styled.div`
         }
     }
 
-    .w100{
+    h2{
         width: 100%;
+        margin-bottom: 30px;
     }
 `;
 
@@ -148,7 +159,7 @@ function Dashboard() {
                 zzz     
             </Card>
             <Card column="1" columnSpan="4" display="flex" justify="space-between">
-                <div className="w100">Latest Reviews by Customers</div>
+                <h2 className="w100">Latest Reviews by Customers</h2>
                 <Review>
                     Lorem ipsum dolor sit, amet consectetur adipisicing 
                     elit. Delectus asperiores quaerat, eveniet libero 

@@ -1,10 +1,36 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { deleteBooking } from '../features/bookings/bookingsSlice';
 import { ButtonInfo, ButtonSuccess } from '../styles/components/Button';
+import { Flex } from '../styles/components/Flex';
 import { ItemTypes } from './ItemTypes';
 
+const StyledFlex = styled(Flex)`
+
+    & > div:nth-of-type(1) {
+        width: 70%;
+        height: 60px;
+        margin-right: 8%;
+        border-radius: 8px;
+        background-color: ${props => props.theme.grey_lighter};
+    }
+
+    & > div:nth-of-type(2) {
+        width: 76%;
+
+        span{
+            font-size: .8em;
+            color: #799283;
+        }
+    }
+`;
+
 export function RoomCard ({ id, index, number, room_type, amenities, price, offer_price, 
-    status, img, moveCard }) {
+    status, img, moveCard, room }) {
+
+    const dispatch = useDispatch();
     const ref = useRef(null);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
@@ -62,17 +88,30 @@ export function RoomCard ({ id, index, number, room_type, amenities, price, offe
     });
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
+
+    function deleteHandler(e) {
+        dispatch(deleteBooking(room));
+    }
+
     return (
         <tr ref={ref} style={{opacity}} data-handler-id={handlerId}>
-            <td>--</td>
-            <td>--</td>
-			<td>{number}</td>
+			<td>
+                <StyledFlex align="center">
+                    <div>
+                    
+                    </div>
+                    <div>
+                        <div><span>{id}</span></div>
+                        <div>{number}</div>                      
+                    </div>
+                </StyledFlex>
+            </td>
             <td>{room_type}</td>
             <td>{amenities}</td>
             <td>{price}</td>
             <td>{offer_price}</td>
             <td><ButtonSuccess>{status}</ButtonSuccess></td>
-            <td><i class="fas fa-ellipsis-v"></i></td>
+            <td><i onClick={deleteHandler} className="fas fa-ellipsis-v"></i></td>
 		</tr>
         );
 };

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { AuthContext } from "../../contexts/auth-context";
+import { AuthContext } from "../../contexts/AuthContext";
 
 // style={{border:"1px solid blue"}}
 const StyledHeader = styled.header`
@@ -137,7 +137,7 @@ const User = styled.div`
 
 function Header() {
 
-    const { logged, setLogged} = useContext(AuthContext);
+    const {setAuth} = useContext(AuthContext);
     const location = useLocation();
     const path = location.pathname;
     let title = "";
@@ -149,7 +149,7 @@ function Header() {
 
     function logOutHandler() {
         localStorage.setItem('loggedUser', false);
-        setLogged(false);
+        setAuth(false);
     }
 
     return (

@@ -8,21 +8,22 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import App from './App';
 import { darkTheme } from "./styles/themes";
 import { DndProvider } from 'react-dnd';
-// import store from "./store.js";
+import { AuthProvider } from './contexts/AuthContext';
+import store from "./store.js";
 // import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-    // <Provider store={store}>
+    <Provider store={store}>
       <ThemeProvider theme={darkTheme}>
         <DndProvider backend={HTML5Backend}>
-          
+          <AuthProvider>
             <React.StrictMode>
               <App />
             </React.StrictMode>
-          
+          </AuthProvider>
         </DndProvider>
       </ThemeProvider>
-    // </Provider>
+    </Provider>
     ,
   document.getElementById('root')
 );

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { AuthContext } from "../../contexts/auth-context";
+import { AuthContext } from "../../contexts/AuthContext";
 import { ButtonGreen } from "../../styles/components/Button";
+import { Icon } from "../../styles/components/Icon";
 import { MainContainer } from "../../styles/components/MainContainer";
 
 const StyledLogin = styled(MainContainer)`
@@ -53,7 +54,15 @@ const CardBody = styled.div`
     }
 `;
 
-const FormControl = styled.div`
+interface FormControlProps {
+    display?: any;
+    justify?: any;
+    alignI?: any;
+    w?:string;
+    mr?: any;
+}
+
+const FormControl = styled.div< FormControlProps >`
     position: relative;
     display: ${props => props.display};
     justify-content: ${props => props.justify};
@@ -94,26 +103,12 @@ const CardFooter = styled.div`
     }
 `;
 
-const Icon = styled.div`
+const IconForm = styled(Icon)`
     position: absolute;
 
-    div{   
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        height: 45px;
-        padding: 14px;
-        font-size: 1em;
-        background-color: #686868;;
-        color: ${props => props.theme.green_std};
-        border:0 !important;
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-
-        i{
-           height: 100%;
-        }
+    div{
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
 `;
 
@@ -121,8 +116,7 @@ export default function Login() {
 
     let navigate = useNavigate();
 
-    const { logged, setLogged} = useContext(AuthContext);
-
+    const { auth, setAuth} = useContext(AuthContext);
     const [ user, setUser ] = useState("");
     const [ password , setPassword ] = useState("");
 
@@ -133,33 +127,32 @@ export default function Login() {
         try{
             localStorage.setItem('loggedUser', state);
         } catch(e) {
-        console.log(e)
+            console.log(e);
         }
     }
 
     useEffect(() => {
-        console.log("gfgf");
-        if (logged) {
+        if (auth) {
             navigate('/', { replace: true });
         }
-    } , [logged, navigate]);
+    } , [auth, navigate]);
         
 
-    const nameChangehandler = (e) => {
+    const nameChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
         const user = e.target.value
         setUser(user)
     }
-    const passChangeHandler = (e) => {
+    const passChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
         const password = e.target.value
         setPassword(password)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
         if(user === userName && password === userPassword){
-            setLogged(true);
+            setAuth(true);
             saveState(true);
         } else {
             alert('Wrong username or password')
@@ -180,15 +173,15 @@ export default function Login() {
                 <CardBody>
                     <form>
                         <FormControl>
-                            <Icon>
+                            <IconForm>
                                 <div><i className="fas fa-user fa-fw"></i></div>
-                            </Icon>
+                            </IconForm>
                             <input name="userName" type="text" placeholder="username" onChange={nameChangehandler} />                           
                         </FormControl>
                         <FormControl>
-                            <Icon>
+                            <IconForm>
                                 <div><i className="fas fa-key fa-fw"></i></div>
-                            </Icon>
+                            </IconForm>
                             <input name="userPass" type="password" placeholder="password" onChange={passChangeHandler} />
                         </FormControl>
                         <FormControl w="4" display="flex" mr="20px" alignI="center">

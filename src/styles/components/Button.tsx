@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+interface ButtonProps {
+    bg?: string ;
+    color?: string ;
+    fontSize?: number ;
+}
+
+export const Button = styled.button< ButtonProps >`
     border: 1px;
     border-radius: 6px;
     padding: 11px 20px;
@@ -41,6 +47,17 @@ export const ButtonError = styled(Button)`
 export const ButtonSuccess = styled(Button)`
     color: #5AD07A;
     background-color: #5AD07A26;
+
+    &:hover{
+        color: #fff;
+        background-color: #5AD07A;
+    }
+`;
+
+export const ButtonSuccess2 = styled(Button)`
+    color: #5AD07A;
+    background-color: #13584626;
+    padding: 16px 24px;
 
     &:hover{
         color: #fff;

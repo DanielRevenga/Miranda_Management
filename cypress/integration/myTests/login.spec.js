@@ -14,6 +14,8 @@ describe("Login tests", () => {
         cy.get("input[name='userPass']").type("a");
 
         cy.get("button[type='submit']").click();
+
+        // should
     });
 
     it("login our user unsuccessfully and remain in the login page", () => {
@@ -21,12 +23,13 @@ describe("Login tests", () => {
 
         cy.get("input[name='userName']").type("fail");
         cy.get("input[name='userPass']").type("fail");
+
+        cy.get("button[type='submit']").click();
+
+        // should
     });
 
-    it("enter the root page without login and get redirect to the login page", () => {
+    it.only("enter the root page without login and get redirect to the login page", () => {
         cy.visit("/");
-
-        cy.get("input[name='userName']").type("nope");
-        cy.get("input[name='userPass']").type("nope");
     });
 });

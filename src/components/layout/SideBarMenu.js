@@ -144,6 +144,7 @@ function SideBarMenu() {
 
     const location = useLocation();
     const path = location.pathname;
+    console.log("PATH: "+path);
 
     return (
         <StyledSideBarMenu>
@@ -151,7 +152,8 @@ function SideBarMenu() {
             <Logo>
                 <div className="logo">
                     {/* <img src="/public/img/hotel_logo.png" alt="" /> */}
-                    <img src="/img/hotel_logo.png" alt="" width="100%" height="100%" />
+                    <img src="/img/logo/hotel_top.png" alt="" width="100%" height="30%" />
+                    <img src="/img/logo/hotel_bottom.png" alt="" width="100%" height="70%" />
                 </div>
                 <div className="titles">
                     <div className="title">travl</div>
@@ -176,7 +178,7 @@ function SideBarMenu() {
                         </li> 
                     }
 
-                    {path.includes("/rooms") ? 
+                    {path.toLowerCase().includes("rooms") ? 
                         <li className="red">
                             <Link to="/rooms">
                                 <div><i className="fas fa-key"></i></div>
@@ -191,7 +193,7 @@ function SideBarMenu() {
                         </li>
                     }
                     
-                    {path.includes("/bookings") ? 
+                    {path.toLowerCase().includes("booking") ? 
                         <li className="red">
                             <Link to="/bookings">
                                 <div><i className="fas fa-calendar-day"></i></div>
@@ -206,7 +208,7 @@ function SideBarMenu() {
                         </li>
                     }
                     
-                    {path.includes("/contact") ? 
+                    {path.toLowerCase().includes("contact") ? 
                         <li className="red">
                             <Link to="/contact">
                                 <div><i className="fas fa-users"></i></div>
@@ -222,7 +224,7 @@ function SideBarMenu() {
                     }
                     
 
-                    {path.includes("/users") ? 
+                    {path.toLowerCase().includes("users") ? 
                         <li className="red">
                             <Link to="/users">
                                 <div><i className="fas fa-puzzle-piece"></i></div>

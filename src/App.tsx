@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
-import Layout from './components/layout/Layout';
 
+import Layout from './components/layout/Layout';
 import Dashboard from "./components/pages/Dashboard";
 import Rooms from "./components/pages/Rooms";
 import Bookings from "./components/pages/Bookings";
 import Contact from "./components/pages/Contact";
 import Login from "./components/pages/Login";
-import { AuthContext } from "./contexts/auth-context";
+// import { AuthContext } from "./contexts/auth-context";
 import { PrivateRoute } from "./components/PrivateRoute";
 import Users from "./components/pages/Users";
+import { AuthContext, AuthProvider } from "./contexts/AuthContext";
+import AddBooking from "./components/pages/AddBooking";
+import EditBooking from "./components/pages/EditBooking";
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -52,17 +55,18 @@ function App() {
     }
   }
   
-  const x = loadLoggedUser();
-  console.log("App");
-  console.log(x);
-  console.log("-----");
-  const [logged, setLogged] = useState(x);
+  // const x = loadLoggedUser();
+  // console.log("App");
+  // console.log(x);
+  // console.log("-----");
+  // const [logged, setLogged] = useState(x);
 
   return (
     <><BrowserRouter basename={process.env.PUBLIC_URL}>
-    <AuthContext.Provider value={{ logged, setLogged }}>
-      <GlobalStyle  />    
-        <Layout logged={logged}>
+    {/* <AuthContext.Provider value={{ logged, setLogged }}> */}
+    <AuthProvider>
+      <GlobalStyle />    
+        <Layout>
             <Routes>
               <Route path="/" element={
                 <PrivateRoute>
@@ -92,13 +96,26 @@ function App() {
                 <PrivateRoute>
                   <Users />
                 </PrivateRoute>
-              } />Dashboard
+              } />
+
+              <Route path="/addBooking" element={
+                <PrivateRoute>
+                  <AddBooking />
+                </PrivateRoute>
+              } />
+
+              <Route path="/editBooking/:id" element={
+                <PrivateRoute>
+                  <EditBooking />
+                </PrivateRoute>
+              } />
 
               <Route path="/login" element={<Login />} />      
             </Routes>
         </Layout>
-          
-      </AuthContext.Provider></BrowserRouter>
+      </AuthProvider>
+      {/* </AuthContext.Provider> */}
+      </BrowserRouter>
     </>
   );
 }
