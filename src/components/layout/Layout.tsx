@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -17,6 +17,8 @@ const Layout = ({children}: LayoutProps) => {
 
     const {authState} = useContext(AuthContext);
     
+    if (!authState.auth) return <>{ children }</>;
+
     return (
         <StyledLayout>
             { authState ? <SideBarMenu /> : null }

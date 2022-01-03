@@ -184,10 +184,13 @@ export default function Login() {
                             </IconForm>
                             <input name="userPass" type="password" placeholder="password" onChange={passChangeHandler} />
                         </FormControl>
-                        <FormControl w="4" display="flex" mr="20px" alignI="center">
+                        {/* <FormControl w="4" display="flex" mr="20px" alignI="center">
                             <input type="checkbox" />
                             <div>Remember Me</div>
-                        </FormControl>
+                            
+                        </FormControl> */}
+                        <div>User: a</div>
+                            <div>Password: a</div>
                         <ButtonGreen type="submit" onClick={handleSubmit}>Login</ButtonGreen>
                     </form>
                 </CardBody>

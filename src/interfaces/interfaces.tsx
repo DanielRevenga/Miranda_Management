@@ -27,16 +27,16 @@ export interface Booking {
 }
 
 export interface User {
-    img: string;
-    name: string;
-    position: string;
+    image: string;
+    full_name: string;
     id: number;
     email: string;
     phone: number;
     start_date: string;
     end_date: string;
     description: string;
-    state: string;
+    status: string;
+    job: string;
 }
 
 export interface Contact{

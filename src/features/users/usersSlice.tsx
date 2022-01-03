@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UsersState } from "../../interfaces/interfaces";
+import { users_data } from "../../data/users_data";
+import { User, UsersState } from "../../interfaces/interfaces";
 import { RootState } from "../../store";
 
-function loadInitialState() {
-
+function loadInitialUserList(): User[] {
+    let users: User[] = [];
+    for (let user of users_data){
+        users.push({
+            ...user,
+            phone: parseInt(user.phone)
+        })
+    }
+    return users;
 }
 
 const initialState: UsersState = {

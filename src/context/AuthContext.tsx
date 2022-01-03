@@ -28,6 +28,7 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
             // return false;
         } catch (err) {
             console.log(err);
+            return {auth: false};
         }
         return {auth: false};
     }

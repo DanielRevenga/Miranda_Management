@@ -1,15 +1,28 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
 import { rooms_data } from "../../data/rooms_data";
-import { RoomsState } from "../../interfaces/interfaces";
+import { RoomsState, Room } from "../../interfaces/interfaces";
 import { RootState } from "../../store";
 
 function loadInitialState() {
     return rooms_data;
 }
 
+function loadInitialRoomList(): Room[] {
+    let rooms: Room[] = [];
+    for (let room of rooms_data){
+        rooms.push({
+            ...room,
+            name: "",
+            rate: 0,
+            discount: 0
+        })
+    }
+    return rooms;
+}
+
 const initialState: RoomsState = {
-    roomsList: [],
+    roomsList: loadInitialRoomList(),
     lastFetch: ""
 }
 
