@@ -9,7 +9,6 @@ import { ButtonError } from "../../styles/components/Button";
 import { MainContainer } from "../../styles/components/MainContainer";
 import ReservationStatsGraph2 from "../ReservationStatsGraph2";
 
-
 const StyledDashboard = styled(MainContainer)`
     display: grid;
     height: 1500px;
@@ -322,7 +321,6 @@ const GraphLegend = styled.nav`
 const BookingsInfo = styled.nav`
     display: flex;
 `;
-
 
 function Dashboard() {
    
