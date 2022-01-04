@@ -2,7 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 
 import { bookings_data } from "../../data/bookings_data";
 import { BookingsState } from "../../types/types";
-// import { RootState } from "../../store/RootState";
+import { RootState } from "../../store/RootState";
 
 function loadInitialBookingList() {
     return bookings_data;
