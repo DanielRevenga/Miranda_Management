@@ -1,28 +1,26 @@
 import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 
-import { ButtonError, ButtonGreen, ButtonInfo, ButtonSuccess} from "../../styles/components/Button";
 import { MainContainer } from "../../styles/components/MainContainer";
-import { bookings_data } from "../../data/bookings_data";
+// import { bookings_data } from "../../data/bookings_data";
 import update from "immutability-helper";
 import { BookingCard } from "../BookingCard";
 import { useSelector } from "react-redux";
 import { selectBookings } from "../../features/bookings/bookingsSlice";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Select, SelectGreen, SelectGreenOutlined } from "../../styles/components/Select";
-import { Booking } from "../../types/types";
+import { SelectGreen, SelectGreenOutlined } from "../../styles/components/Select";
+import { Booking } from "../../interfaces/interfaces";
 
-const StyledRooms = styled.div`
-    background-color: ${props => props.theme.main_color_2};
-    height: 1000px;
-    color: ${props => props.theme.grey_light_stg};
-    width: 2000px;
-    margin-left: 20vw;
-    margin-top: 12vh;
-    padding: 25px;      
-        
-`;
+// const StyledRooms = styled.div`
+//     background-color: ${props => props.theme.main_color_2};
+//     height: 1000px;
+//     color: ${props => props.theme.grey_light_stg};
+//     width: 2000px;
+//     margin-left: 20vw;
+//     margin-top: 12vh;
+//     padding: 25px;       
+// `;
 
 const StyledTable = styled.table`
     width: 100%;
@@ -129,6 +127,8 @@ export default function Bookings() {
    
     const bookingsState = useSelector(selectBookings);
     const bookings = bookingsState.bookingsList;
+    console.log("bookingsState");
+    console.log(bookingsState);
     const [cards, setCards] = useState(bookings);
 
     useEffect(() =>{

@@ -1,20 +1,42 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
 import { rooms_data } from "../../data/rooms_data";
+import { RoomsState, Room } from "../../interfaces/interfaces";
+import { RootState } from "../../store";
 
 function loadInitialState() {
     return rooms_data;
 }
 
+function loadInitialRoomList(): Room[] {
+    let rooms: Room[] = [];
+    for (let room of rooms_data){
+        rooms.push({
+            ...room,
+            name: "",
+            rate: 0,
+            discount: 0
+        })
+    }
+    return rooms;
+}
+
+const initialState: RoomsState = {
+    roomsList: loadInitialRoomList(),
+    lastFetch: ""
+}
+
 const roomsSlice = createSlice({
     name: "rooms",
-    initialState: {
-        roomsList: loadInitialState(),
-        lastFetch: ""
-    },
+    initialState,
+    // initialState: {
+    //     roomsList: loadInitialState(),
+    //     lastFetch: ""
+    // },
     reducers: {
         addRoom: (state, action) => {
-            action.payload.id = state.roomsList.at(-1).id + 1;
+            // action.payload.id = state.roomsList.at(-1).id + 1;
+            action.payload.id = state.roomsList[state.roomsList.length - 1].id + 1;
             state.roomsList.push(action.payload);
         },
         editRoom: (state, action) => {
@@ -26,7 +48,7 @@ const roomsSlice = createSlice({
             state.roomsList.splice(deleteIndex, 1);
         },
         sortRooms: (state, action) => {
-            state.roomsList.sort((a, b) => {
+            state.roomsList.sort((a:any, b:any) => {
                 if (a[action.payload] < b[action.payload]) return -1;
                 if (a[action.payload] > b[action.payload]) return 1;
                 return 0;
@@ -35,7 +57,7 @@ const roomsSlice = createSlice({
     }
 });
 
-export const selectRooms = state => state.rooms;
+export const selectRooms = (state: RootState) => state.rooms;
 
 export const {
     addRoom,

@@ -1,4 +1,4 @@
-import React from "react";
+// import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonGreen } from "../../styles/components/Button";
@@ -140,7 +140,7 @@ const Info = styled.div`
 `;
 
 
-function SideBarMenu() {
+const SideBarMenu = () => {
 
     const location = useLocation();
     const path = location.pathname;
@@ -163,7 +163,7 @@ function SideBarMenu() {
             {/* NAV MENU */}
             <StyledNav>
                 <ul>
-                    {path=="/" ? 
+                    {path==="/" ? 
                         <li className="red">
                             <Link to="/">
                                 <div><i className="fas fa-chart-pie"></i></div>

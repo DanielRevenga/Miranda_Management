@@ -1,12 +1,23 @@
 import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-import { Navigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
-export const PrivateRoute = ({ children }) => {
+interface PrivateRouteProps {
+    children: JSX.Element | JSX.Element[];
+}
 
-    const {auth}  = useContext(AuthContext);
+export const PrivateRoute = ({ children }: any) => {
+
+    const {authState}  = useContext(AuthContext);
+    let navigate = useNavigate();
     console.log("PRIVATE ROUTE");
-    console.log(auth);
+    console.log(authState.auth);
     console.log("-----");
-    return (auth ? children : <Navigate to="/login" />);
+    // if (!authState.auth) navigate("/login");
+    // else return (authState.auth ? children : "");
+
+    if (authState.auth) return ( children );
+    return (
+        <Navigate to="/login" />
+    )
 }

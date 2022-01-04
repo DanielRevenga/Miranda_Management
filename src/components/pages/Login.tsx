@@ -1,7 +1,8 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
+import { AuthState } from "../../interfaces/interfaces";
 import { ButtonGreen } from "../../styles/components/Button";
 import { Icon } from "../../styles/components/Icon";
 import { MainContainer } from "../../styles/components/MainContainer";
@@ -116,25 +117,24 @@ export default function Login() {
 
     let navigate = useNavigate();
 
-    const { auth, setAuth} = useContext(AuthContext);
+    const { authState, authIn } = useContext(AuthContext);
+    const { auth } = authState;
     const [ user, setUser ] = useState("");
     const [ password , setPassword ] = useState("");
 
     const userName = 'a';
     const userPassword = 'a';
 
-    const saveState = (state) => {
+    const saveState = (state: AuthState) => {
         try{
-            localStorage.setItem('loggedUser', state);
+            localStorage.setItem('loggedUser', state.auth.toString());
         } catch(e) {
             console.log(e);
         }
     }
 
     useEffect(() => {
-        if (auth) {
-            navigate('/', { replace: true });
-        }
+        if (auth) navigate('/', { replace: true });
     } , [auth, navigate]);
         
 
@@ -149,11 +149,11 @@ export default function Login() {
         setPassword(password)
     }
 
-    const handleSubmit = (e:ChangeEvent<HTMLInputElement>) => {
+    const handleSubmit = (e:MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         if(user === userName && password === userPassword){
-            setAuth(true);
-            saveState(true);
+            if (authIn) authIn();
+            saveState({auth:true});
         } else {
             alert('Wrong username or password')
         }
@@ -184,10 +184,13 @@ export default function Login() {
                             </IconForm>
                             <input name="userPass" type="password" placeholder="password" onChange={passChangeHandler} />
                         </FormControl>
-                        <FormControl w="4" display="flex" mr="20px" alignI="center">
+                        {/* <FormControl w="4" display="flex" mr="20px" alignI="center">
                             <input type="checkbox" />
                             <div>Remember Me</div>
-                        </FormControl>
+                            
+                        </FormControl> */}
+                        <div>User: a</div>
+                            <div>Password: a</div>
                         <ButtonGreen type="submit" onClick={handleSubmit}>Login</ButtonGreen>
                     </form>
                 </CardBody>

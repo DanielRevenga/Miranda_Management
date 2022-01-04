@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 // style={{border:"1px solid blue"}}
 const StyledHeader = styled.header`
@@ -74,7 +74,7 @@ const Search = styled.div`
     }
 `;
 
-const Icons_list = styled.div`
+const IconsList = styled.div`
     display: flex;
     
     div{
@@ -86,7 +86,7 @@ const Icons_list = styled.div`
             color: ${props => props.theme.green_std};
         }
 
-        i{
+        i.data{
             cursor: pointer;
 
             &[data-count]{
@@ -137,20 +137,26 @@ const User = styled.div`
 
 function Header() {
 
-    const {setAuth} = useContext(AuthContext);
+    const {authOut} = useContext(AuthContext);
     const location = useLocation();
+    let navigate = useNavigate();
     const path = location.pathname;
     let title = "";
-    if (path=="/") title="Dashboard";
+    if (path==="/") title="Dashboard";
     else if (path.includes("rooms")) title="Rooms";
     else if (path.includes("bookings")) title="Bookings";
     else if (path.includes("contact")) title="Contact";
     else if (path.includes("users")) title="Users";
 
     function logOutHandler() {
-        localStorage.setItem('loggedUser', false);
-        setAuth(false);
-    }
+        localStorage.setItem('loggedUser', "false");
+        if (authOut) authOut();
+        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZ");
+        // return <Navigate to='/login'/>;
+        navigate("/login");
+        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZ");
+
+    } 
 
     return (
         <StyledHeader>
@@ -163,14 +169,14 @@ function Header() {
                 <input type="text" /><i className="fas fa-search"></i>
             </Search>
 
-            <Icons_list>
+            <IconsList>
                 {/* <div><i className="far fa-heart"></i></div> */}
-                <div><i className="far fa-envelope" data-count="2"></i></div>
-                <div><i className="far fa-bell" data-count="87"></i></div>
+                <div><i className="far fa-envelope data" data-count="2"></i></div>
+                <div><i className="far fa-bell data" data-count="87"></i></div>
                 {/* <div><Link to="/login"><i className="fas fa-sign-out-alt"></i></Link></div> */}
                 <div><i onClick={logOutHandler} className="fas fa-sign-out-alt"></i></div>
                 {/* <div><i className="far fa-comment-dots"></i></div>   */}
-            </Icons_list>              
+            </IconsList>              
 
             <div className="user_group_container">
                 <User></User>

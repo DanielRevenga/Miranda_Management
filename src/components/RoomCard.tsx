@@ -3,7 +3,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { deleteBooking } from '../features/bookings/bookingsSlice';
-import { ButtonInfo, ButtonSuccess } from '../styles/components/Button';
+import { ButtonSuccess } from '../styles/components/Button';
 import { Flex } from '../styles/components/Flex';
 import { ItemTypes } from './ItemTypes';
 
@@ -28,10 +28,10 @@ const StyledFlex = styled(Flex)`
 `;
 
 export function RoomCard ({ id, index, number, room_type, amenities, price, offer_price, 
-    status, img, moveCard, room }) {
+    status, img, moveCard, room }: any) {
 
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<any>(null);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
         collect(monitor) {
@@ -39,7 +39,7 @@ export function RoomCard ({ id, index, number, room_type, amenities, price, offe
                 handlerId: monitor.getHandlerId(),
             };
         },
-        hover(item, monitor) {
+        hover(item: any, monitor) {
             if (!ref.current) {
                 return;
             }
@@ -56,18 +56,21 @@ export function RoomCard ({ id, index, number, room_type, amenities, price, offe
             // Determine mouse position
             const clientOffset = monitor.getClientOffset();
             // Get pixels to the top
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-            // Only perform the move when the mouse has crossed half of the items height
-            // When dragging downwards, only move when the cursor is below 50%
-            // When dragging upwards, only move when the cursor is above 50%
-            // Dragging downwards
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
+            if (clientOffset !== null) {
+                const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+                // Only perform the move when the mouse has crossed half of the items height
+                // When dragging downwards, only move when the cursor is below 50%
+                // When dragging upwards, only move when the cursor is above 50%
+                // Dragging downwards
+                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                    return;
+                }
+                // Dragging upwards
+                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                    return;
+                }
             }
-            // Dragging upwards
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
+            
             // Time to actually perform the action
             moveCard(dragIndex, hoverIndex);
             // Note: we're mutating the monitor item here!
@@ -89,7 +92,7 @@ export function RoomCard ({ id, index, number, room_type, amenities, price, offe
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
-    function deleteHandler(e) {
+    function deleteHandler() {
         dispatch(deleteBooking(room));
     }
 

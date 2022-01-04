@@ -6,7 +6,7 @@ import { addBooking } from "../../features/bookings/bookingsSlice";
 import { ButtonGreen } from "../../styles/components/Button";
 import { Icon } from "../../styles/components/Icon";
 import { MainContainer } from "../../styles/components/MainContainer";
-import { Booking } from "../../types/types";
+import { Booking } from "../../interfaces/interfaces";
 
 const Card = styled.div`
     display: flex;
@@ -31,7 +31,7 @@ interface FormControlProps {
     mr?: any;
 }
 
-const FormControl = styled.div< FormControlProps >`
+const FormControl = styled.div<FormControlProps>`
     position: relative;
     display: ${props => props.display};
     justify-content: ${props => props.justify};

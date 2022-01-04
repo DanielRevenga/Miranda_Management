@@ -1,27 +1,27 @@
 import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 
-import { ButtonError, ButtonGreen, ButtonInfo, ButtonSuccess} from "../../styles/components/Button";
+import { ButtonGreen} from "../../styles/components/Button";
 import { MainContainer } from "../../styles/components/MainContainer";
-import { rooms_data } from "../../data/rooms_data";
+// import { rooms_data } from "../../data/rooms_data";
 import update from "immutability-helper";
 import { RoomCard } from "../RoomCard";
 import { useSelector } from "react-redux";
 import { selectRooms } from "../../features/rooms/roomsSlice";
 import { Link } from "react-router-dom";
-import { SelectGreen, SelectGreenOutlined } from "../../styles/components/Select";
-import { Room } from "../../types/types";
+import { SelectGreenOutlined } from "../../styles/components/Select";
+import { Room } from "../../interfaces/interfaces";
 
-const StyledRooms = styled.div`
-    background-color: ${props => props.theme.main_color_2};
-    height: 1000px;
-    color: ${props => props.theme.grey_light_stg};
-    width: 2000px;
-    margin-left: 20vw;
-    margin-top: 12vh;
-    padding: 25px;      
+// const StyledRooms = styled.div`
+//     background-color: ${props => props.theme.main_color_2};
+//     height: 1000px;
+//     color: ${props => props.theme.grey_light_stg};
+//     width: 2000px;
+//     margin-left: 20vw;
+//     margin-top: 12vh;
+//     padding: 25px;      
     
-`;
+// `;
 
 const StyledTable = styled.table`
     width: 100%;

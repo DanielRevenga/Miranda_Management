@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { deleteBooking } from '../features/bookings/bookingsSlice';
 import { ButtonInfo, ButtonSuccess } from '../styles/components/Button';
 import { Flex } from '../styles/components/Flex';
-import { Booking } from '../types/types';
+import { Booking } from '../interfaces/interfaces';
 import { ItemTypes } from './ItemTypes';
 
 const StyledFlex = styled(Flex)`
@@ -47,7 +47,7 @@ export function BookingCard ({ id, index, first_name, last_name, order_date, che
     check_out, room_type_number, room_type_type, special_request, moveCard, booking }: BookingCardProps) {
 
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<any>(null);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
         collect(monitor) {
@@ -110,7 +110,7 @@ export function BookingCard ({ id, index, first_name, last_name, order_date, che
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
-    function deleteHandler(e) {
+    function deleteHandler() {
         dispatch(deleteBooking(booking));
     }
 

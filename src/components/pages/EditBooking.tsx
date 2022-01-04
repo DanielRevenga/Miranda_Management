@@ -1,13 +1,13 @@
-import React, { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { addBooking, editBooking, selectBookings } from "../../features/bookings/bookingsSlice";
+import { editBooking, selectBookings } from "../../features/bookings/bookingsSlice";
 import { ButtonGreen } from "../../styles/components/Button";
 import { Icon } from "../../styles/components/Icon";
 import { MainContainer } from "../../styles/components/MainContainer";
-import { Booking } from "../../types/types";
+import { Booking } from "../../interfaces/interfaces";
 
 const Card = styled.div`
     display: flex;
@@ -86,10 +86,11 @@ export default function EditBooking() {
     const bookingsState = useSelector(selectBookings);
     const bookings = bookingsState.bookingsList; 
     console.log(bookings);
-    const [booking, setBooking] = useState<Booking>(bookings.find((booking:Booking) => booking.id === parseInt(booking_id)));
+    const [booking, setBooking] = useState<any>(
+        bookings.find((booking:Booking) => booking.id === parseInt(booking_id)));
     console.log("EDIT BOOKING");
     console.log(booking);
-    console.log(booking["first_name"]);
+    // console.log(booking["first_name"]);
 
     const nameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();

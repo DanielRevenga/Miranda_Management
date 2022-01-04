@@ -11,7 +11,7 @@ import Login from "./components/pages/Login";
 // import { AuthContext } from "./contexts/auth-context";
 import { PrivateRoute } from "./components/PrivateRoute";
 import Users from "./components/pages/Users";
-import { AuthContext, AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import AddBooking from "./components/pages/AddBooking";
 import EditBooking from "./components/pages/EditBooking";
 
@@ -43,17 +43,17 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
 
-  const loadLoggedUser = () => {
-    try {
-        console.log(localStorage.getItem('loggedUser'));
-        return localStorage.getItem('loggedUser');
-        if (localStorage.getItem('loggedUser') !== null && localStorage.getItem('loggedUser')) return true;
-        // return localStorage.getItem('loggedUser') ? localStorage.getItem('loggedUser') : false;
-        return false;
-    } catch (err) {
-        console.log(err);
-    }
-  }
+  // const loadLoggedUser = () => {
+  //   try {
+  //       console.log(localStorage.getItem('loggedUser'));
+  //       return localStorage.getItem('loggedUser');
+  //       if (localStorage.getItem('loggedUser') !== null && localStorage.getItem('loggedUser')) return true;
+  //       // return localStorage.getItem('loggedUser') ? localStorage.getItem('loggedUser') : false;
+  //       return false;
+  //   } catch (err) {
+  //       console.log(err);
+  //   }
+  // }
   
   // const x = loadLoggedUser();
   // console.log("App");
@@ -68,6 +68,10 @@ function App() {
       <GlobalStyle />    
         <Layout>
             <Routes>
+                {/* <Route  path='/' element={<PrivateRoute/>}>
+                  <Route path='/' element={<Dashboard/>}/>          
+                </Route> */}
+
               <Route path="/" element={
                 <PrivateRoute>
                   <Dashboard />
@@ -110,7 +114,11 @@ function App() {
                 </PrivateRoute>
               } />
 
-              <Route path="/login" element={<Login />} />      
+                
+            </Routes>
+
+            <Routes>
+              <Route path="/login" element={<Login />} />    
             </Routes>
         </Layout>
       </AuthProvider>
