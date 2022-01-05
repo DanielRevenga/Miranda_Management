@@ -17,8 +17,7 @@ const StyledDashboard = styled(MainContainer)`
 
     .react-calendar{
         width: 100%;
-        height: 95%;
-        
+        height: 95%;     
         background-color: ${props => props.theme.main_color_1};
         border: none;
 
