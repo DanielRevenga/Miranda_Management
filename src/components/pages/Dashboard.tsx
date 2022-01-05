@@ -385,7 +385,7 @@ function Dashboard() {
                     </div>
                     
                 </GraphLegend>
-                <ReservationStatsGraph2 />
+                <ReservationStatsGraph2 /> 
             </Card>
             <Card row="3" rowSpan="2" column="1" columnSpan="4">
                 <BookingsInfo>
