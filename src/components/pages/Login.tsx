@@ -131,7 +131,7 @@ export default function Login() {
         } catch(e) {
             console.log(e);
         }
-    }
+    };
 
     useEffect(() => {
         if (auth) navigate('/', { replace: true });
@@ -142,12 +142,12 @@ export default function Login() {
         e.preventDefault()
         const user = e.target.value
         setUser(user)
-    }
+    };
     const passChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
         const password = e.target.value
         setPassword(password)
-    }
+    };
 
     const handleSubmit = (e:MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -157,7 +157,7 @@ export default function Login() {
         } else {
             alert('Wrong username or password')
         }
-    }
+    };
 
     return (
         <StyledLogin>

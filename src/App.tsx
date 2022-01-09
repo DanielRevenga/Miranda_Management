@@ -14,6 +14,7 @@ import Users from "./components/pages/Users";
 import { AuthProvider } from "./context/AuthContext";
 import AddBooking from "./components/pages/AddBooking";
 import EditBooking from "./components/pages/EditBooking";
+import Register from "./components/pages/Register";
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -119,6 +120,19 @@ function App() {
 
             <Routes>
               <Route path="/login" element={<Login />} />    
+            </Routes>
+
+            <Routes>
+              <Route path="/registerTest" element={<Register />} />    
+            </Routes>
+            <Routes>
+              <Route path="/loginTest" element={<Register />} />    
+            </Routes>
+            <Routes>
+              <Route path="/getUserTest" element={<Register />} />    
+            </Routes>
+            <Routes>
+              <Route path="/passportTest" element={<Register />} />    
             </Routes>
         </Layout>
       </AuthProvider>
