@@ -2,8 +2,8 @@
   "name": "miranda",
   "version": "0.1.0",
   "private": true,
-  "homepagez": "https://DanielRevenga.github.io/Miranda_Management/",
-  "homepage": ".",
+  "homepage": "https://DanielRevenga.github.io/Miranda_Management/",
+  "homepagez": ".",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/user-event": "^12.8.3",
