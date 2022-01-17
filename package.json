@@ -2,9 +2,11 @@
   "name": "miranda",
   "version": "0.1.0",
   "private": true,
-  "homepagez": "https://DanielRevenga.github.io/Miranda_Management/",
-  "homepage": ".",
+  "homepage": "https://DanielRevenga.github.io/Miranda_Management/",
+  "homepagez": ".",
   "dependencies": {
+    "@fullcalendar/daygrid": "^5.10.1",
+    "@fullcalendar/react": "^5.10.1",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/user-event": "^12.8.3",
     "@types/jest": "^27.0.3",
@@ -37,7 +39,7 @@
     "cypress": "cypress open",
     "lint:css": "stylelint '.src/**/*.js",
     "lint": "eslint src",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject"  
   },
   "eslintConfig": {
     "extends": [
