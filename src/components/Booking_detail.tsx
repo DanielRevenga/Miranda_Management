@@ -5,7 +5,7 @@ export default function Booking_detail() {
 
     return (
         <MainContainer>
-            fdf
+            
         </MainContainer>
     );
 }
