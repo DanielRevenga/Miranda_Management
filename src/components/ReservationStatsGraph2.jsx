@@ -28,13 +28,14 @@ export default function ReservationStatsGraph() {
 
    useEffect(() => {
       // orderWeeks();
-      let width = 590;
+      let width = "100%";
       let height = 420;
       let axisHeight = height - 30;
       let a = height - 10;
       let svg = d3
          .select(ref.current)
          .style("overflow", "auto")
+         .style("width", "100%")
          .append("svg")
          .attr("width", width)
          .attr("height", height);

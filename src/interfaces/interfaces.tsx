@@ -40,8 +40,14 @@ export interface User {
 }
 
 export interface Contact{
-    id: number;
-    name: string;
+    id: String;
+    first_name: String;
+    last_name: String;
+    email: String;
+    phone: String;
+    image: String;
+    subject: String;
+    comment: String;  
 }
 
 export interface AuthState{

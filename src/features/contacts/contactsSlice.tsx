@@ -1,14 +1,25 @@
 import { createSlice, current } from "@reduxjs/toolkit";
-import { ContactsState } from "../../interfaces/interfaces";
+import { Contact, ContactsState } from "../../interfaces/interfaces";
 import { RootState } from "../../store";
 
-function loadInitialState() {
+import { contacts_data } from '../../data/contacts_data';
 
+function loadInitialStateContactsList() {
+    let contacts: Contact[] = [];
+    let id = 1;
+    for (let contact of contacts_data){
+        contacts.push({
+            ...contact,
+            id: id.toString()
+        });
+        id++;
+    }
+    return contacts;
 }
 
 
 const initialState: ContactsState = {
-    contactsList: [],
+    contactsList: loadInitialStateContactsList(),
     lastFetch: ""
 }
 
@@ -22,7 +33,7 @@ const contactsSlice = createSlice({
     reducers: {
         addContact: (state, action) => {
             // action.payload.id = state.contactsList.at(-1).id + 1;
-            action.payload.id = state.contactsList[state.contactsList.length - 1].id + 1;
+            // action.payload.id = state.contactsList[state.contactsList.length - 1].id + 1;
             state.contactsList.push(action.payload);
         },
         editContact: (state, action) => {

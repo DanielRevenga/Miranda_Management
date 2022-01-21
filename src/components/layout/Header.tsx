@@ -17,6 +17,7 @@ const StyledHeader = styled.header`
     left: 17vw;
     top: 0;
     // font-family: ${props => props.theme.poppins};
+    z-index: 2000;
 
     nav, h1 {
         font-size: 1.4em;
@@ -81,6 +82,7 @@ const IconsList = styled.div`
         font-size: 1.5em;
         margin-right: 60px;
         color: ${props => props.theme.green_std};
+        cursor: pointer;
 
         a{
             color: ${props => props.theme.green_std};

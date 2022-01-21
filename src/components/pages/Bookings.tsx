@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SelectGreen, SelectGreenOutlined } from "../../styles/components/Select";
 import { Booking } from "../../interfaces/interfaces";
+import axios from "axios";
 
 // const StyledRooms = styled.div`
 //     background-color: ${props => props.theme.main_color_2};
@@ -127,13 +128,40 @@ export default function Bookings() {
    
     const bookingsState = useSelector(selectBookings);
     const bookings = bookingsState.bookingsList;
-    console.log("bookingsState");
-    console.log(bookingsState);
-    const [cards, setCards] = useState(bookings);
+    // console.log("bookingsState");
+    // console.log(bookingsState);
+    const [cards, setCards] = useState<any>(bookings);
+
+    // useEffect(() =>{
+    //     setCards(bookings);    
+    // }, [bookings]);
 
     useEffect(() =>{
-        setCards(bookings);    
-    }, [bookings]);
+
+        const params = new URLSearchParams();
+        
+        const config = {
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded"
+            }
+        };
+
+        axios.get("localhost:5000/dashboard/bookings/", config)
+            .then( response => setCards(response) )
+            .catch( err => console.log(err) );
+
+    
+        // axios({
+        //     method: "post",
+        //     data: {
+        //         username: registerUsername,
+        //         password: registerPassword
+        //     },
+        //     withCredentials: true,
+        //     url: "http://localhost:5000/register",
+        // }).then((res) => console.log(res));
+
+    }, []);
 
     const moveCard = useCallback((dragIndex, hoverIndex) => {
         const dragCard = cards[dragIndex];

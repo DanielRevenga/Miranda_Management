@@ -4,10 +4,19 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { BiCheckCircle } from "react-icons/bi";
 import { ImCancelCircle} from "react-icons/im"; 
+import { useSelector } from 'react-redux';
+import { selectContacts } from '../../features/contacts/contactsSlice';
+import { useState } from "react";
 
 import { ButtonError } from "../../styles/components/Button";
 import { MainContainer } from "../../styles/components/MainContainer";
 import ReservationStatsGraph2 from "../ReservationStatsGraph2";
+import MyCalendar from '../extra/fullCalendar/MyCalendar';
+import DashboardReviewsList from '../DashboardReviewsList';
+import { Booking, Contact } from "../../interfaces/interfaces";
+import BookingsInfoList from '../BookingsInfoList';
+import { selectBookings } from "../../features/bookings/bookingsSlice";
+
 
 const StyledDashboard = styled(MainContainer)`
     display: grid;
@@ -17,7 +26,7 @@ const StyledDashboard = styled(MainContainer)`
 
     .react-calendar{
         width: 100%;
-        height: 95%;
+        height: 100%;
         background-color: ${props => props.theme.main_color_1};
         border: none;
 
@@ -103,7 +112,7 @@ const StyledDashboard = styled(MainContainer)`
                         }
                     }                 
                 }            
-            }          
+            }   
         }        
     }
 `;
@@ -160,67 +169,6 @@ const Card = styled.div< CardProps >`
         font-weight: normal;
         margin-bottom: 30px;
     }
-`;
-
-const Review = styled.div`
-    border-radius: 10px;
-    border: 1px solid ${props => props.theme.grey_std};
-    width: 31%;
-    padding: 15px;
-    line-height: 1.4;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    .review_footer{
-        margin-top: 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-
-        .titles{
-            width: 60%;
-            font-size: .9em;
-            margin-left: 15px;
-
-            .subtitle{
-                color: #799283;
-                font-size: .8em;
-            }
-
-            .title{
-                width: 100%;
-            }
-        }
-
-        i{
-            // color: ${props => props.theme.main_color_1};
-            font-size: 1.2em;
-            // padding: 2px;
-            // border-radius: 50%;
-            // background-color: ${props => props.theme.green_std};
-
-            &:first-child{
-                margin-right: 10px;
-                // border: 1px solid ${props => props.theme.green_std};
-                // background-color: ${props => props.theme.green_std};
-                color: ${props => props.theme.green_std};
-            }
-            &:last-child{
-                // border: 1px solid ${props => props.theme.red_std};
-                // background-color: ${props => props.theme.red_std};
-                color: ${props => props.theme.red_std};
-            }
-        }
-    }
-`;
-
-const User = styled.div`
-    background-color: ${props => props.theme.grey_lighter};
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
 `;
 
 const FilterStateNav = styled.nav`
@@ -315,14 +263,22 @@ const GraphLegend = styled.nav`
         .info{
             margin-left: 60px;
         }
+
+    }
+    svg{
+        width: 100% !important;
     }
 `;
 
-const BookingsInfo = styled.nav`
-    display: flex;
-`;
 
 function Dashboard() {
+
+    const contactsState = useSelector(selectContacts);
+    const bookingsState = useSelector(selectBookings);
+    const [actualDate, setActualDate] = useState(new Date());
+
+    const [contacts, setContacts] = useState<Contact[]>(contactsState.contactsList);
+    const [bookings, setBookings] = useState<Booking[]>(bookingsState.bookingsList);
    
     return (<>
         <StyledDashboard>
@@ -356,10 +312,12 @@ function Dashboard() {
                 </div>
             </Card>
 
-            {/* GRAPHS */}
+            {/* CALENDARS */}
             <Card column="1" columnSpan="2" >
-                <Calendar />
+                {/* <Calendar /> */}
+                <MyCalendar setActualDate={setActualDate} />
             </Card>
+            {/* GRAPHS */}
             <Card column="3" columnSpan="2" display="flex" justify="space-between">
                 <h3>Reservation Stats</h3>  
                 <FilterStateNav>
@@ -380,87 +338,18 @@ function Dashboard() {
                         <div className="redBox"></div>
                         Check Out&nbsp;
                         <div className="info">20,441</div>
-                    </div>
-                    
+                    </div>      
                 </GraphLegend>
                 <ReservationStatsGraph2 /> 
             </Card>
-            <Card row="3" rowSpan="2" column="1" columnSpan="4">
-                <BookingsInfo>
-                    {/* <div className="image roomm"></div>    
-                    <div>
-                        <div className="title">Deluxe Room B-12324</div>
-                        <div>
-                            <div className="image user"></div>
-                            <div className="name">James Sukardi</div>
-                            <div className="time">12min ago</div>
-                        </div>
-                    </div>     
-                    <div className="dates">
-                        3
-                    </div>   */}
-                </BookingsInfo>   
+            {/* BOOKINGS INFO */}
+            <Card row="3" rowSpan="12" column="1" columnSpan="4">
+                <BookingsInfoList bookings={ bookings } actualDate={actualDate} />
             </Card>
             <Card column="1" columnSpan="4" display="flex" justify="space-between">
                 <h2 className="w100">Latest Reviews by Customers</h2>
-                <Review>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing 
-                    elit. Delectus asperiores quaerat, eveniet libero 
-                    maxime ipsa.
 
-                    <div className="review_footer">
-                        <User></User>
-
-                        <div className="titles">
-                            <div className="title">Kusnaidi Anderson</div>
-                            <div className="subtitle">4m ago</div>
-                        </div>
-
-                        <div className="like">
-                            <i className="fas fa-check-square"></i>
-                            <i className="fas fa-window-close"></i>
-                        </div>
-                    </div>
-                </Review>
-                <Review>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing 
-                    elit. Delectus asperiores quaerat, eveniet libero 
-                    maxime ipsa.
-                    
-                    <div className="review_footer">
-                        <User></User>
-                        <div className="titles">
-                            <div className="title">Bella Spahira</div>
-                            <div className="subtitle">4m ago</div>
-                        </div>
-                        <div className="like">
-                            <i className="fas fa-check-square"></i>
-                            <i className="fas fa-window-close"></i>
-                        </div>
-                    </div>
-                </Review>
-                <Review>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing 
-                    elit. Delectus asperiores quaerat, eveniet libero 
-                    maxime ipsa.
-
-                    <div className="review_footer">
-                        <User></User>
-
-                        <div className="titles">
-                            <div className="title">Thomas Al-Ghazali</div>
-                            <div className="subtitle">4m ago</div>
-                        </div>
-
-                        <div className="like">
-                            <i className="fas fa-check-square"></i>
-                            <i className="fas fa-window-close"></i>
-
-                            {/* <BiCheckCircle />
-                            <ImCancelCircle /> */}
-                        </div>
-                    </div>
-                </Review>
+                <DashboardReviewsList contacts={ contacts } />
             </Card>
         </StyledDashboard>  
         </>);
