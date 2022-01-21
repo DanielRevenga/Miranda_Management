@@ -25,6 +25,7 @@ const StyledFlex = styled(Flex)`
             color: #799283;
         }
     }
+    
 `;
 
 export function RoomCard ({ id, index, number, room_type, amenities, price, offer_price, 
