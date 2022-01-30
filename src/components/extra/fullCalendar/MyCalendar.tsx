@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux';
 const FullCalendarContainer = styled.div`
 
 
+
+
     .fc-daygrid {   
         height: 400px;
         margin: 10px;
