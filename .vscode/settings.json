@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/295c570d-f1a7-4a7e-b52d-32a91c29a5a8/resourceGroups/OXYGEN/providers/Microsoft.Web/sites/mirandaManagement",
+    "appService.deploySubpath": "."
+}

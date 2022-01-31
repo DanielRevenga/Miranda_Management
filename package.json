@@ -2,7 +2,7 @@
   "name": "miranda",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://DanielRevenga.github.io/Miranda_Management/",
+  "homepagezz": "https://DanielRevenga.github.io/Miranda_Management/",
   "homepagez": ".",
   "dependencies": {
     "@fullcalendar/core": "^5.10.1",
