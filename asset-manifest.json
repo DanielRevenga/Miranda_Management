@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "./static/js/main.600b3898.chunk.js",
-    "main.js.map": "./static/js/main.600b3898.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.9130d648.js",
-    "runtime-main.js.map": "./static/js/runtime-main.9130d648.js.map",
-    "static/css/2.204bfc19.chunk.css": "./static/css/2.204bfc19.chunk.css",
-    "static/js/2.42be299b.chunk.js": "./static/js/2.42be299b.chunk.js",
-    "static/js/2.42be299b.chunk.js.map": "./static/js/2.42be299b.chunk.js.map",
-    "index.html": "./index.html",
-    "static/css/2.204bfc19.chunk.css.map": "./static/css/2.204bfc19.chunk.css.map",
-    "static/js/2.42be299b.chunk.js.LICENSE.txt": "./static/js/2.42be299b.chunk.js.LICENSE.txt"
+    "main.js": "/Miranda_Management/static/js/main.f5aa95a1.chunk.js",
+    "main.js.map": "/Miranda_Management/static/js/main.f5aa95a1.chunk.js.map",
+    "runtime-main.js": "/Miranda_Management/static/js/runtime-main.64a3cfd4.js",
+    "runtime-main.js.map": "/Miranda_Management/static/js/runtime-main.64a3cfd4.js.map",
+    "static/css/2.204bfc19.chunk.css": "/Miranda_Management/static/css/2.204bfc19.chunk.css",
+    "static/js/2.41219f44.chunk.js": "/Miranda_Management/static/js/2.41219f44.chunk.js",
+    "static/js/2.41219f44.chunk.js.map": "/Miranda_Management/static/js/2.41219f44.chunk.js.map",
+    "index.html": "/Miranda_Management/index.html",
+    "static/css/2.204bfc19.chunk.css.map": "/Miranda_Management/static/css/2.204bfc19.chunk.css.map",
+    "static/js/2.41219f44.chunk.js.LICENSE.txt": "/Miranda_Management/static/js/2.41219f44.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.9130d648.js",
+    "static/js/runtime-main.64a3cfd4.js",
     "static/css/2.204bfc19.chunk.css",
-    "static/js/2.42be299b.chunk.js",
-    "static/js/main.600b3898.chunk.js"
+    "static/js/2.41219f44.chunk.js",
+    "static/js/main.f5aa95a1.chunk.js"
   ]
 }
