@@ -129,8 +129,6 @@ const FilterStateNav = styled.nav`
 export default function Rooms() {
    
     const roomsState = useSelector(selectRooms);
-    console.log("roomsState");
-    console.log(roomsState);
     const rooms = roomsState.roomsList;
     const [cards, setCards] = useState(rooms);
 
@@ -146,17 +144,17 @@ export default function Rooms() {
                 [hoverIndex, 0, dragCard],
             ],
         }));
-    }, [cards]);
+    }, [cards, rooms]);
 
     const renderCard = (card:Room, index:number) => {
         return (
             <RoomCard 
-                key={card.id}
+                key={card._id}
                 room={card}
                 index={index}
-                id={card.id}
+                id={card._id}
                 number={card.number}
-                room_type={card.room_type}
+                room_type_type={card.room_type_type}
                 amenities={card.amenities}
                 price={card.price}
                 offer_price={card.offer_price}

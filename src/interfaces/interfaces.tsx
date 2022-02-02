@@ -1,7 +1,7 @@
 export interface Room {
-    id: number;
+    _id: string;
     number: number;
-    room_type: string;
+    room_type_type: string;
     amenities: string;
     price: number;
     offer_price: number;
@@ -13,23 +13,21 @@ export interface Room {
 }
 
 export interface Booking {
-    id: number;
-    first_name: string ;
-    last_name: string;
+    _id: string;
+    user_id: string;
+    room_id: string;
+    status: string;
     order_date: string;
     check_in: string ;
     check_out: string ;
     special_request: string;
-    room_type_type: string;
-    room_type_number: string;
-    email: string ;
-    discount: number ;
 }
 
 export interface User {
+    _id: string;
     image: string;
-    full_name: string;
-    id: number;
+    first_name: string;
+    last_name: string;
     email: string;
     phone: number;
     start_date: string;
@@ -40,7 +38,7 @@ export interface User {
 }
 
 export interface Contact{
-    id: String;
+    _id: String;
     first_name: String;
     last_name: String;
     email: String;
@@ -57,19 +55,23 @@ export interface AuthState{
 export interface UsersState {
     usersList: User[];
     lastFetch: string;
+    status: string;
 }
 
 export interface BookingsState {
     bookingsList: Booking[];
     lastFetch: string;
+    status: string;
 }
 
 export interface RoomsState {
     roomsList: Room[];
     lastFetch: string;
+    status: string;
 }
 
 export interface ContactsState {
     contactsList: Contact[];
     lastFetch: string;
+    status: string;
 }

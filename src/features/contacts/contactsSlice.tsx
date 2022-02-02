@@ -1,8 +1,9 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { Contact, ContactsState } from "../../interfaces/interfaces";
 import { RootState } from "../../store";
 
 import { contacts_data } from '../../data/contacts_data';
+import axios, { AxiosRequestHeaders } from "axios";
 
 function loadInitialStateContactsList() {
     let contacts: Contact[] = [];
@@ -10,26 +11,33 @@ function loadInitialStateContactsList() {
     for (let contact of contacts_data){
         contacts.push({
             ...contact,
-            id: id.toString()
+            _id: id.toString()
         });
         id++;
     }
     return contacts;
 }
 
+export const getContacts: any = createAsyncThunk(
+    "dasboard/contacts",
+    async (dispatch, state) => {
+        const headers: AxiosRequestHeaders =  {
+            'Content-Type': 'application/json'  
+        }
+
+        return await axios.get("http://localhost:5000/dashboard/contacts", headers);
+    }
+)
 
 const initialState: ContactsState = {
-    contactsList: loadInitialStateContactsList(),
-    lastFetch: ""
+    contactsList: [],
+    lastFetch: "",
+    status: "null"
 }
 
 const contactsSlice = createSlice({
     name: "contacts",
     initialState,
-    // initialState: {
-    //     contactsList: [],
-    //     lastFetch: ""
-    // },
     reducers: {
         addContact: (state, action) => {
             // action.payload.id = state.contactsList.at(-1).id + 1;
@@ -37,11 +45,11 @@ const contactsSlice = createSlice({
             state.contactsList.push(action.payload);
         },
         editContact: (state, action) => {
-            const editIndex = state.contactsList.findIndex(room => room.id === action.payload.id);
+            const editIndex = state.contactsList.findIndex(room => room._id === action.payload.id);
             state.contactsList.splice(editIndex, 1, action.payload);
         },
         deleteContact: (state, action) => {
-            const deleteIndex = state.contactsList.findIndex(room => room.id === action.payload.id);
+            const deleteIndex = state.contactsList.findIndex(room => room._id === action.payload.id);
             state.contactsList.splice(deleteIndex, 1);
         },
         sortContacts: (state, action) => {
@@ -51,6 +59,18 @@ const contactsSlice = createSlice({
                 return 0;
             });
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getContacts.fulfilled, (state, { payload }) => {
+            state.status = "success";
+            state.contactsList = payload.data;
+        })
+        .addCase(getContacts.pending, (state, { payload }) => {
+            state.status = "pending";
+        })
+        .addCase(getContacts.rejected, (state, { payload }) => {
+            state.status = "failed";
+        })
     }
 });
 

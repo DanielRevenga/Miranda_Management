@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { deleteBooking } from '../features/bookings/bookingsSlice';
-import { ButtonInfo, ButtonSuccess } from '../styles/components/Button';
+import { ButtonInfo, ButtonSuccess, ButtonError, ButtonWarning } from '../styles/components/Button';
 import { Flex } from '../styles/components/Flex';
-import { Booking } from '../interfaces/interfaces';
+import { Booking, Room, User } from '../interfaces/interfaces';
 import { ItemTypes } from './ItemTypes';
 
 const StyledFlex = styled(Flex)`
@@ -26,25 +26,25 @@ const StyledFlex = styled(Flex)`
             color: #799283;
         }
     }
+    
 `;
 
 interface BookingCardProps {
-    id: number;
+    key?: string;
+    id: string;
     index: number;
-    first_name: string ;
-    last_name: string;
+    user?: User;
+    room?: Room;
     order_date: string;
     check_in: string ;
     check_out: string ;
-    room_type_number: string;
-    room_type_type: string;
     special_request: string;
     moveCard: any;
     booking: Booking;
 }
 
-export function BookingCard ({ id, index, first_name, last_name, order_date, check_in, 
-    check_out, room_type_number, room_type_type, special_request, moveCard, booking }: BookingCardProps) {
+export function BookingCard ({ key, id, index, user, room, order_date, check_in, 
+    check_out, special_request, moveCard, booking }: BookingCardProps) {
 
     const dispatch = useDispatch();
     const ref = useRef<any>(null);
@@ -115,24 +115,38 @@ export function BookingCard ({ id, index, first_name, last_name, order_date, che
     }
 
     return (
-        <tr ref={ref} style={{opacity}} data-handler-id={handlerId}>
+        <tr key={id} ref={ref} style={{opacity}} data-handler-id={handlerId} >
 			<td>
                 <StyledFlex align="center">
                     <div>
                     
                     </div>
-                    <div>
-                        <div>{first_name} {last_name}</div>
-                        <div><span>{id}</span></div>
-                    </div>
+                    {
+                        user
+                        ?
+                        <div>
+                            <div>{user.first_name} {user.last_name}</div>
+                            <div><span>{id}</span></div>
+                        </div>
+                        : ""
+                    }
+                    
                 </StyledFlex>
             </td>
-            <td>{order_date}</td>
-            <td>{check_in}</td>
-            <td>{check_out}</td>
+            <td className='date'>{new Date(order_date).toLocaleDateString()}</td>
+            <td className='date'>{new Date(check_in).toLocaleDateString()}</td>
+            <td className='date'>{new Date(check_out).toLocaleDateString()}</td>
             <td><Link to="/addBooking"><ButtonInfo fontSize={1}>View Notes</ButtonInfo></Link></td>
-            <td>{room_type_type} - {room_type_number}</td>
-            <td><Link to={"/editBooking/"+id}><ButtonSuccess>Booked</ButtonSuccess></Link></td>
+            {
+                room
+                ? <td>{room.room_type_type} - {room.number}</td>
+                : ""
+            }
+            <td className="status">
+            { booking.status==="check in" ? <Link to={"/editBooking/"+booking._id}><ButtonSuccess>Check In</ButtonSuccess></Link> : "" }
+            { booking.status==="check out" ? <Link to={"/editBooking/"+booking._id}><ButtonError>Check Out</ButtonError></Link> : "" }
+            { booking.status==="in progress" ? <Link to={"/editBooking/"+booking._id}><ButtonWarning>In Progress</ButtonWarning></Link> : "" }
+            </td>
             <td><i onClick={deleteHandler} className="fas fa-ellipsis-v"></i></td>
 		</tr>
         );

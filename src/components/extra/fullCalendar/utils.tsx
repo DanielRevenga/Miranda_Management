@@ -55,7 +55,7 @@ export const getActualEvents = (bookings: Booking[]):EventInput[] => {
             });
         }
     }
-
+    
     return actual_events;
 }
 

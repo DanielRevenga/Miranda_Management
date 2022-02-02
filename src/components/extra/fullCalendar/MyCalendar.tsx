@@ -9,11 +9,9 @@ import { getActualEvents } from './utils';
 import { selectBookings } from "../../../features/bookings/bookingsSlice";
 // import bookings_data from "../../../data/bookings_data";
 import { useSelector } from 'react-redux';
+import {useEffect} from 'react';
 
 const FullCalendarContainer = styled.div`
-
-
-
 
     .fc-daygrid {   
         height: 400px;
@@ -138,52 +136,58 @@ const FullCalendarContainer = styled.div`
     }
 `;
 
-export default function MyCalendar({ setActualDate }: any) {
+export default function MyCalendar({ setActualDate, bookings, setBookings }: any) {
     
     const bookingsState = useSelector(selectBookings);
-    const bookings = bookingsState.bookingsList;
-    console.log("bookingsState");
-    console.log(bookingsState);
-    const [calEvents, setCalEvents] = useState(getActualEvents(bookings));
+    const bookings2 = bookingsState.bookingsList;
+    // console.log("bookingsState");
+    // console.log(bookings2);
+    const [calEvents, setCalEvents] = useState(getActualEvents(bookings2));
+
+    useEffect( () => {
+        setCalEvents(getActualEvents(bookings2));
+        setBookings(bookings2);
+    },[bookings2]);
 
     const clickEventHandler = () => {
-        console.log("====clickEventHandler====");
+        // console.log("====clickEventHandler====");
     
     }
 
     const setEventsHanlder = () => {
-        console.log("====setEventsHanlder====");
+        // console.log("====setEventsHanlder====");
     
     }
     
     const dateSelectHandler = (e: any) => {
-        console.log("====dateSelectHandler====");
+        // console.log("====dateSelectHandler====");
         for (let el in e) {
-            console.log(`${ el }: ${ e[el] }`);
+            // console.log(`${ el }: ${ e[el] }`);
         }
     
     }
 
     const addEventHandler = (e: any) => {
-        console.log("====addEventHandle====");
+        // console.log("====addEventHandle====");
     
     }
 
     const changeEventHandler = (e: any) => {
-        console.log("====changeEventHandler====");
+        // console.log("====changeEventHandler====");
     
     }
 
     const removeEventHandler = (e: any) => {
-        console.log("====removeEventHandler====");
+        // console.log("====removeEventHandler====");
     
     }
 
     const datesSetHandler = (e: any) => {
-        console.log("====datesSetHandler====");
+        // console.log("====datesSetHandler====");
         let month = e.end.getMonth();
         if (month === 0) month = 12;
         setActualDate(e.end);
+        setBookings(bookings2);
     }
 
     const renderEventContent = (eventContent: EventContentArg) => {

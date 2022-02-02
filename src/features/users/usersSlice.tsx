@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios, { AxiosRequestHeaders } from "axios";
 import { users_data } from "../../data/users_data";
 import { User, UsersState } from "../../interfaces/interfaces";
 import { RootState } from "../../store";
@@ -14,30 +15,38 @@ function loadInitialUserList(): User[] {
     return users;
 }
 
+export const getUsers: any = createAsyncThunk(
+    "dasboard/users",
+    async (dispatch, state) => {
+        const headers: AxiosRequestHeaders =  {
+            'Content-Type': 'application/json'  
+        }
+
+        return await axios.get("http://localhost:5000/dashboard/users", headers);
+    }
+)
+
 const initialState: UsersState = {
     usersList: [],
-    lastFetch: ""
+    lastFetch: "",
+    status: "null"
 }
 
 const usersSlice = createSlice({
     name: "users",
     initialState,
-    // initialState: {
-    //     usersList: [],
-    //     lastFetch: ""
-    // } as UsersState,
     reducers: {
         addUser: (state, action) => {
             // action.payload.id = state.usersList.at(-1).id + 1;
-            action.payload.id = state.usersList[state.usersList.length - 1].id + 1;
+            action.payload.id = state.usersList[state.usersList.length - 1]._id + 1;
             state.usersList.push(action.payload);
         },
         editUser: (state, action) => {
-            const editIndex = state.usersList.findIndex(room => room.id === action.payload.id);
+            const editIndex = state.usersList.findIndex(room => room._id === action.payload.id);
             state.usersList.splice(editIndex, 1, action.payload);
         },
         deleteUser: (state, action) => {
-            const deleteIndex = state.usersList.findIndex(room => room.id === action.payload.id);
+            const deleteIndex = state.usersList.findIndex(room => room._id === action.payload.id);
             state.usersList.splice(deleteIndex, 1);
         },
         sortUsers: (state, action) => {
@@ -47,6 +56,18 @@ const usersSlice = createSlice({
                 return 0;
             });
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getUsers.fulfilled, (state, { payload }) => {
+            state.status = "success";
+            state.usersList = payload.data;
+        })
+        .addCase(getUsers.pending, (state, { payload }) => {
+            state.status = "pending";
+        })
+        .addCase(getUsers.rejected, (state, { payload }) => {
+            state.status = "failed";
+        })
     }
 });
 

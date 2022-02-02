@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": "..\\Modulo3"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\Testing"
+		},
+		{
+			"path": "..\\Miranda_css"
+		},
+		{
+			"path": "..\\TypeScript\\React-ts\\mi-app"
+		},
+		{
+			"path": "..\\express"
+		},
+		{
+			"path": "..\\..\\Tutorials\\Node"
+		},
+		{
+			"path": "..\\..\\Users\\Daniel\\Desktop\\delete\\react\\fullcalendar-example-projects"
+		},
+		{
+			"path": "..\\devOps"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Miranda_css"
+	}
+}

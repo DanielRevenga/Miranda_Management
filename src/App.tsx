@@ -15,6 +15,8 @@ import { AuthProvider } from "./context/AuthContext";
 import AddBooking from "./components/pages/AddBooking";
 import EditBooking from "./components/pages/EditBooking";
 import Register from "./components/pages/Register";
+import { useDispatch } from "react-redux";
+import { getBookings } from './features/bookings/bookingsSlice';
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -61,6 +63,14 @@ function App() {
   // console.log(x);
   // console.log("-----");
   // const [logged, setLogged] = useState(x);
+  const dispatch = useDispatch();
+
+  useEffect( () => {
+    dispatch(getBookings());
+    dispatch(getBookings());
+    dispatch(getBookings());
+    dispatch(getBookings());
+  }, []);
 
   return (
     <><BrowserRouter basename={process.env.PUBLIC_URL}>

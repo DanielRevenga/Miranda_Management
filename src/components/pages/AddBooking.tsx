@@ -81,35 +81,35 @@ export default function AddBooking() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const nameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const name = e.target.value;
-        if (booking !== null) {       
-            let newBooking:Booking = {...booking};
-            newBooking["first_name"] = name;
-            setBooking(newBooking);           
-        }
-    }
+    // const nameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const name = e.target.value;
+    //     if (booking !== null) {       
+    //         let newBooking:Booking = {...booking};
+    //         newBooking["first_name"] = name;
+    //         setBooking(newBooking);           
+    //     }
+    // }
 
-    const lastNameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const lastName = e.target.value;
-        if (booking !== null) {  
-            let newBooking:Booking = {...booking};
-            newBooking["last_name"] = lastName;
-            setBooking(newBooking);
-        }
-    }
+    // const lastNameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const lastName = e.target.value;
+    //     if (booking !== null) {  
+    //         let newBooking:Booking = {...booking};
+    //         newBooking["last_name"] = lastName;
+    //         setBooking(newBooking);
+    //     }
+    // }
 
-    const orderDateChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const orderDate = e.target.value;
-        if (booking !== null) {  
-            let newBooking:Booking = {...booking};
-            newBooking["order_date"] = orderDate;
-            setBooking(newBooking);
-        }
-    }
+    // const orderDateChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const orderDate = e.target.value;
+    //     if (booking !== null) {  
+    //         let newBooking:Booking = {...booking};
+    //         newBooking["order_date"] = orderDate;
+    //         setBooking(newBooking);
+    //     }
+    // }
 
     const checkInChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -131,22 +131,21 @@ export default function AddBooking() {
         }
     }
 
-    const roomTypeChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const roomType = e.target.value;
-        if (booking !== null) {  
-            let newBooking:Booking = {...booking};
-            newBooking["room_type_type"] = roomType;
-            newBooking["room_type_number"] = "34";
-            setBooking(newBooking);
-        }
-    }
+    // const roomTypeChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const roomType = e.target.value;
+    //     if (booking !== null) {  
+    //         let newBooking:Booking = {...booking};
+    //         newBooking["room_type_type"] = roomType;
+    //         newBooking["room_type_number"] = "34";
+    //         setBooking(newBooking);
+    //     }
+    // }
 
     const handleSubmit = (e:MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (booking !== null) {  
-            if (booking["first_name"] && booking["last_name"] && booking["check_in"] 
-                && booking["check_out"] && booking["order_date"]){
+            if (booking["check_in"] && booking["check_out"] ){
                     
                 navigate("/bookings");
                 dispatch(addBooking(booking));
@@ -158,30 +157,30 @@ export default function AddBooking() {
         <MainContainer>
             <Card>
                 {/* FIRST NAME */}
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="userName">First Name</label>
                     <IconForm>
                         <div><i className="fas fa-file-alt"></i></div>
                     </IconForm>
                     
                     <input id="userName" name="userName" type="text" onChange={e => nameChangeHandler(e)} />                           
-                </FormControl>
+                </FormControl> */}
                 {/* LAST NAME */}
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="userLastName">Last Name</label>
                     <IconForm>
                         <div><i className="fas fa-file-alt"></i></div>
                     </IconForm>
                     <input id="userLastName" name="userLastName" type="text" onChange={lastNameChangeHandler} />                           
-                </FormControl>
+                </FormControl> */}
                 {/* ORDER DATE */}
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="orderDate">Order Date</label>
                     <IconForm>
                         <div><i className="fas fa-calendar-alt"></i></div>
                     </IconForm>
                     <input id="orderDate" name="orderDate" type="date" onChange={orderDateChangehandler} />                           
-                </FormControl>
+                </FormControl> */}
                 {/* CHECK IN */}
                 <FormControl>
                     <label htmlFor="checkIn">Check In</label>
@@ -200,13 +199,13 @@ export default function AddBooking() {
                 </FormControl>
                 {/* ROOM TYPE */}
                 
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="roomType">Room Type</label>
                     <IconForm>
                         <div><i className="fas fa-tags"></i></div>
                     </IconForm>
                     <input id="roomType" name="roomType" type="text" onChange={roomTypeChangehandler} />                           
-                </FormControl>
+                </FormControl> */}
 
                 <ButtonGreen type="submit" onClick={handleSubmit}>ADD</ButtonGreen>
             </Card>

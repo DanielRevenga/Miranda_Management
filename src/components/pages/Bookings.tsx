@@ -12,6 +12,10 @@ import { Link } from "react-router-dom";
 import { SelectGreen, SelectGreenOutlined } from "../../styles/components/Select";
 import { Booking } from "../../interfaces/interfaces";
 import axios from "axios";
+import { selectRooms } from "../../features/rooms/roomsSlice";
+import { selectUsers } from "../../features/users/usersSlice";
+import { ButtonGreenWhite, ButtonGreenOutlined } from '../../styles/components/Button';
+import ButtonPagList from '../ButtonPagList';
 
 // const StyledRooms = styled.div`
 //     background-color: ${props => props.theme.main_color_2};
@@ -34,6 +38,7 @@ const StyledTable = styled.table`
     thead{
         font-weight: bold;
         border-bottom: 2px solid ${props => props.theme.grey_std};
+        text-align: center;
 
         td{
             padding-top: 15px;
@@ -49,10 +54,11 @@ const StyledTable = styled.table`
     td{
         padding 5px;
         cursor: move;
+        text-align: center;
 
         &:first-child{
             padding-left: 25px;
-            width: 20%;
+            width: 80px;
         }
         &:last-child{
             padding-right: 20px;
@@ -60,7 +66,25 @@ const StyledTable = styled.table`
         i{
             cursor: pointer;
         }
+        &.status{
+            width: 14.5%;
+            button{
+                width: 90%;
+            }
+        }
+        &.date{
+            letter-spacing: 1px;
+        }
+
+        tr{
+            
+            border-bottom: 1px solid red;
+            border: 1px solid red;
+            
+        }
     }
+
+    
 `;
 
 const FilterStateNav = styled.nav`
@@ -102,6 +126,11 @@ const FilterStateNav = styled.nav`
                     border-bottom: 2px solid #135846;
                 }
             }
+
+            a.active{
+                color: #135846;
+                    border-bottom: 2px solid #135846;
+            }
         }
     }
 
@@ -120,6 +149,56 @@ const FilterStateNav = styled.nav`
         select:nth-of-type(2){
             // width: 10%;
             text-align: center;     
+
+            option{
+                text-align: left; 
+                border: 2px solid red;
+                margin-bottom: 20px;
+            }
+        }
+    }
+`;
+
+const Pagination = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    display: flex;
+    margin-top: 10px;
+    border-radius: 6px;
+    width: 100%;
+
+    .controllers{
+        display: flex;
+        button{
+            color: #fff;  
+            background-color: #202020;
+
+            &:hover{
+                color: #fff;
+                background-color: #135846;
+            }
+            &.hidden{
+                visibility: hidden;
+            }
+        }
+        
+        div.pages{
+            margin: 0 15px;
+            // border: 1px solid red;
+            background-color: #202020;
+    
+            button{
+                background-color: #202020;
+                border: 1px solid transparent;
+                color: #686868;
+    
+                &:hover{
+                    color: #fff;
+                    background-color: #135846;
+                }               
+            }
         }
     }
 `;
@@ -127,41 +206,25 @@ const FilterStateNav = styled.nav`
 export default function Bookings() {
    
     const bookingsState = useSelector(selectBookings);
+    const roomsState = useSelector(selectRooms);
+    const usersState = useSelector(selectUsers);
     const bookings = bookingsState.bookingsList;
-    // console.log("bookingsState");
-    // console.log(bookingsState);
-    const [cards, setCards] = useState<any>(bookings);
+    const rooms = roomsState.roomsList;
+    const users = usersState.usersList;
 
-    // useEffect(() =>{
-    //     setCards(bookings);    
-    // }, [bookings]);
+    const [filterStatus, setFilterStatus] = useState("all");
+    const [filterAge, setFilterAge] = useState("newest");
 
-    useEffect(() =>{
-
-        const params = new URLSearchParams();
-        
-        const config = {
-            headers: {
-                "Content-type": "application/x-www-form-urlencoded"
-            }
-        };
-
-        axios.get("localhost:5000/dashboard/bookings/", config)
-            .then( response => setCards(response) )
-            .catch( err => console.log(err) );
-
+    const maxBookingPerPage = 10;
+    const [page, setPage] = useState(1);
+    const maxPage_ = Math.ceil( bookings.length / maxBookingPerPage );
+    const [maxPage, setMaxPage] = useState(maxPage_);
+    const [filteredBookings, setFilteredBookings] = useState<Booking[]>([]);
     
-        // axios({
-        //     method: "post",
-        //     data: {
-        //         username: registerUsername,
-        //         password: registerPassword
-        //     },
-        //     withCredentials: true,
-        //     url: "http://localhost:5000/register",
-        // }).then((res) => console.log(res));
-
-    }, []);
+    let firstBookingIndex = maxBookingPerPage * (page - 1);
+    let lastBookingIndex = firstBookingIndex + maxBookingPerPage;
+    
+    const [cards, setCards] = useState<any>(bookings);
 
     const moveCard = useCallback((dragIndex, hoverIndex) => {
         const dragCard = cards[dragIndex];
@@ -171,36 +234,101 @@ export default function Bookings() {
                 [hoverIndex, 0, dragCard],
             ],
         }));
-    }, [cards]);
+    }, [cards, bookings]);
+
+    useEffect( () => {
+        if (bookings.length){
+            let filteredBookings_ = ([...bookings]);
+            if (filterAge === "newest") filteredBookings_.sort((a,b)=>new Date(a.order_date).getTime()-new Date(b.order_date).getTime());
+            if (filterAge === "oldest") filteredBookings_.sort((a,b)=>new Date(b.order_date).getTime()-new Date(a.order_date).getTime());
+            
+            // filteredBookings = filteredBookings.slice( firstBookingIndex, lastBookingIndex );
+            console.log("filteredBookings");
+            console.log(filteredBookings_);
+
+            if (filterStatus === "check_in"){
+                // setFilteredBookings(filteredBookings.filter(booking => booking.status === "check in"));
+                filteredBookings_ = filteredBookings_.filter(booking => booking.status === "check in");
+                setCards(filteredBookings_);
+            }else if (filterStatus === "check_out"){
+                filteredBookings_ = filteredBookings_.filter(booking => booking.status === "check out");
+                setCards(filteredBookings_);
+            }else if (filterStatus === "in_progress"){
+                filteredBookings_ = filteredBookings_.filter(booking => booking.status === "in progress");
+                setCards(filteredBookings_);
+            }else{
+                setCards(filteredBookings_);
+            }
+            // console.log("object");
+            console.log("LENGTH: ",filteredBookings_.length);
+            setMaxPage(Math.ceil( filteredBookings_.length / maxBookingPerPage ));
+            setFilteredBookings(filteredBookings_);
+            
+        }
+
+    }, [filterStatus, filterAge, page, bookings]);
 
     const renderCard = (card:Booking, index:number) => {
+        const room=rooms.find( room => room._id === card.room_id );
+        const user=users.find( user => user._id === card.user_id );
+
         return (
             <BookingCard 
-                key={card.id}
+                // key={card._id}
                 index={index}
                 booking={card}
-                id={card.id}
-                first_name={card.first_name}
-                last_name={card.last_name}
+                id={card._id}
+                room={room}
+                user={user}
                 order_date={card.order_date}
                 check_in={card.check_in}
                 check_out={card.check_out}
-                room_type_number={card.room_type_number}
-                room_type_type={card.room_type_type}
                 special_request={card.special_request}
                 moveCard={moveCard}/>
         );
     };
 
+    const changeAgeSelectHandler = (e:any) => {
+        setFilterAge(e.target.value);
+        console.log(e.target.value);
+    }
+
+    const leftControllerHandler = () => {
+        if ( page === 1 ) return;
+        setPage( last => last - 1);
+        console.log("page",page);
+    }
+
+    const rightControllerHandler = () => {
+        if ( page >= filteredBookings.length / maxBookingPerPage || filteredBookings.length < 10 ) return;
+        setPage( last => last + 1);
+        console.log("page",page);
+    }
+
     return (
         <MainContainer>
             <FilterStateNav>
                 <ul>
-                    <li><Link to="">All&nbsp;Guest</Link></li>
-                    <li><Link to="">Pending</Link></li>
-                    <li><Link to="">Booked</Link></li>
-                    <li><Link to="">Canceled</Link></li>
-                    <li><Link to="">Refund</Link></li>
+                    {
+                        filterStatus === "all" 
+                        ? <li><Link to="" onClick={() => {setFilterStatus("all"); setPage(1);}} className="active">All&nbsp;Guest</Link></li>
+                        : <li><Link to="" onClick={() => {setFilterStatus("all"); setPage(1);}}>All&nbsp;Guest</Link></li>
+                    }
+                    {
+                        filterStatus === "check_in"
+                        ? <li><Link to=""onClick={() => {setFilterStatus("check_in"); setPage(1);}}  className="active">Check In</Link></li>
+                        : <li><Link to=""onClick={() => {setFilterStatus("check_in"); setPage(1);}} >Check In</Link></li>
+                    }
+                    {
+                        (filterStatus === "check_out") 
+                        ? <li><Link to=""onClick={() => {setFilterStatus("check_out"); setPage(1);}}  className="active">Check Out</Link></li>
+                        : <li><Link to=""onClick={() => {setFilterStatus("check_out"); setPage(1);}} >Check Out</Link></li>
+                    }
+                    {
+                        filterStatus === "in_progress"
+                        ? <li><Link to=""onClick={() => {setFilterStatus("in_progress"); setPage(1);}}  className="active">In Progress</Link></li>
+                        : <li><Link to=""onClick={() => {setFilterStatus("in_progress"); setPage(1);}} >In Progress</Link></li>
+                    }
                 </ul>
 
                 {/* <ButtonGreen>1 November 2020 - 30 November 2020</ButtonGreen> */}
@@ -210,10 +338,10 @@ export default function Bookings() {
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </SelectGreen>
-                    <SelectGreenOutlined>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </SelectGreenOutlined>
+                    <SelectGreen onChange={changeAgeSelectHandler} value={filterAge}>
+                        <option value="newest">Order By Newest</option>
+                        <option value="oldest">Order By Oldest</option>
+                    </SelectGreen>
                 </div>
             </FilterStateNav>
 
@@ -234,9 +362,56 @@ export default function Bookings() {
 
                 {/* TABLE BODY */}
                 <tbody>
-                    {cards.map((card:Booking, i:number) => renderCard(card, i))}
+                    {cards
+                        .slice( firstBookingIndex, lastBookingIndex )
+                        .map((card:Booking, i:number) => renderCard(card, i))}
                 </tbody>
             </StyledTable>
+
+            <Pagination>
+                <div className="info">
+                    1234
+                </div>
+                <div className="controllers">
+                    {
+                        page === 1
+                        ?
+                            <ButtonGreenOutlined onClick={leftControllerHandler} className="hidden">
+                                Prev
+                            </ButtonGreenOutlined>
+                        :
+                            <ButtonGreenOutlined onClick={leftControllerHandler}>
+                                Prev
+                            </ButtonGreenOutlined>
+                    }
+                    <div className="pages">
+
+                        <ButtonPagList 
+                            setPage={setPage} maxPage={maxPage} />
+
+                        {/* <ButtonGreenWhite>
+                            1
+                        </ButtonGreenWhite>
+                        <ButtonGreenWhite>
+                            2
+                        </ButtonGreenWhite>
+                        <ButtonGreenWhite>
+                            3
+                        </ButtonGreenWhite> */}
+                    </div>
+                    {
+                        page >= filteredBookings.length / maxBookingPerPage || filteredBookings.length < 10
+                        ?
+                            <ButtonGreenOutlined onClick={rightControllerHandler} className="hidden">
+                                Next
+                            </ButtonGreenOutlined>
+                        :
+                            <ButtonGreenOutlined onClick={rightControllerHandler}>
+                                Next
+                            </ButtonGreenOutlined>
+                    }
+                </div>
+            </Pagination>
 
             
         </MainContainer>

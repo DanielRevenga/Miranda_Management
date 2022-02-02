@@ -144,7 +144,7 @@ export default function DashboardReviewsList( {contacts} : DashboardReviewsProps
 
                             <div className="review_footer">
                                 <User></User>
-
+                                
                                 <div className="titles">
                                     <div className="title">{contact.first_name} {contact.last_name}</div>
                                     <div className="subtitle">4m ago</div>

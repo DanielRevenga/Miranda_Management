@@ -18,8 +18,8 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 
     const loadLoggedUser = (): AuthState => {
         try {
-            console.log("loadLoggedUser:");
-            console.log(localStorage.getItem('loggedUser'));
+            // console.log("loadLoggedUser:");
+            // console.log(localStorage.getItem('loggedUser'));
             if (localStorage.getItem('loggedUser') === "true") return {auth: true};
             
             // return localStorage.getItem('loggedUser');

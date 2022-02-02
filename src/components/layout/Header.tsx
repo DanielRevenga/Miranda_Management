@@ -153,10 +153,10 @@ function Header() {
     function logOutHandler() {
         localStorage.setItem('loggedUser', "false");
         if (authOut) authOut();
-        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZ");
+        // console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZ");
         // return <Navigate to='/login'/>;
         navigate("/login");
-        console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZ");
+        // console.log("ZZZZZZZZZZZZZZZZZZZZZZZZZ");
 
     } 
 

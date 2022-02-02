@@ -4,18 +4,21 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { BiCheckCircle } from "react-icons/bi";
 import { ImCancelCircle} from "react-icons/im"; 
-import { useSelector } from 'react-redux';
-import { selectContacts } from '../../features/contacts/contactsSlice';
-import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts, selectContacts } from '../../features/contacts/contactsSlice';
+import { useEffect, useState } from "react";
 
 import { ButtonError } from "../../styles/components/Button";
 import { MainContainer } from "../../styles/components/MainContainer";
 import ReservationStatsGraph2 from "../ReservationStatsGraph2";
 import MyCalendar from '../extra/fullCalendar/MyCalendar';
 import DashboardReviewsList from '../DashboardReviewsList';
-import { Booking, Contact } from "../../interfaces/interfaces";
+import { Booking, Contact, Room, User } from "../../interfaces/interfaces";
 import BookingsInfoList from '../BookingsInfoList';
-import { selectBookings } from "../../features/bookings/bookingsSlice";
+import { getBookings, selectBookings } from "../../features/bookings/bookingsSlice";
+import axios from "axios";
+import { getRooms, selectRooms } from "../../features/rooms/roomsSlice";
+import { selectUsers } from "../../features/users/usersSlice";
 
 
 const StyledDashboard = styled(MainContainer)`
@@ -273,13 +276,36 @@ const GraphLegend = styled.nav`
 
 function Dashboard() {
 
+    const dispatch = useDispatch();
+    const getStates = async() => { 
+        await dispatch(getBookings());
+        await dispatch(getRooms());
+        await dispatch(getContacts());
+        // await dispatch(getUsers());
+    }   
+    useEffect( () => {
+        const getStates2 = async() => {
+            await getStates();
+
+        }
+
+        getStates2();
+    }, []);
+
+    // GET STATES
     const contactsState = useSelector(selectContacts);
     const bookingsState = useSelector(selectBookings);
+    const roomsState = useSelector(selectRooms);
+    const usersState = useSelector(selectUsers);
+    
     const [actualDate, setActualDate] = useState(new Date());
 
     const [contacts, setContacts] = useState<Contact[]>(contactsState.contactsList);
     const [bookings, setBookings] = useState<Booking[]>(bookingsState.bookingsList);
-   
+    const [rooms, setRooms] = useState<Room[]>(roomsState.roomsList);
+    const [users, setUsers] = useState<User[]>(usersState.usersList);
+
+
     return (<>
         <StyledDashboard>
             {/* CARDS */}
@@ -315,7 +341,10 @@ function Dashboard() {
             {/* CALENDARS */}
             <Card column="1" columnSpan="2" >
                 {/* <Calendar /> */}
-                <MyCalendar setActualDate={setActualDate} />
+                <MyCalendar 
+                    setActualDate={setActualDate} 
+                    bookings={bookings}
+                    setBookings={setBookings} />
             </Card>
             {/* GRAPHS */}
             <Card column="3" columnSpan="2" display="flex" justify="space-between">
@@ -344,7 +373,11 @@ function Dashboard() {
             </Card>
             {/* BOOKINGS INFO */}
             <Card row="3" rowSpan="12" column="1" columnSpan="4">
-                <BookingsInfoList bookings={ bookings } actualDate={actualDate} />
+                <BookingsInfoList 
+                    bookings={ bookings }
+                    actualDate={actualDate}
+                    rooms={rooms}
+                    users={users} />
             </Card>
             <Card column="1" columnSpan="4" display="flex" justify="space-between">
                 <h2 className="w100">Latest Reviews by Customers</h2>

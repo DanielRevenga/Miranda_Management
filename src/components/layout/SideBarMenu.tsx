@@ -144,7 +144,7 @@ const SideBarMenu = () => {
 
     const location = useLocation();
     const path = location.pathname;
-    console.log("PATH: "+path);
+    // console.log("PATH: "+path);
 
     return (
         <StyledSideBarMenu>

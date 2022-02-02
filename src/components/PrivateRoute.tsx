@@ -9,10 +9,11 @@ interface PrivateRouteProps {
 export const PrivateRoute = ({ children }: any) => {
 
     const {authState}  = useContext(AuthContext);
-    let navigate = useNavigate();
-    console.log("PRIVATE ROUTE");
-    console.log(authState.auth);
-    console.log("-----");
+    // let navigate = useNavigate();
+    // console.log("PRIVATE ROUTE");
+    // console.log(authState.auth);
+    // console.log("-----");
+
     // if (!authState.auth) navigate("/login");
     // else return (authState.auth ? children : "");
 

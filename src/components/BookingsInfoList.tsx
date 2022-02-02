@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Booking } from '../interfaces/interfaces';
+import { Booking, Room, User } from '../interfaces/interfaces';
 
 const MyBookingsInfoList = styled.nav`
     display: flex;
@@ -77,9 +77,11 @@ const BookingsInfo = styled.nav`
 interface BookingsInfoListProps {
     bookings: Booking[];
     actualDate: Date;
+    rooms: Room[];
+    users: User[];
 }
 
-export default function BookingsInfoList( { bookings, actualDate } : BookingsInfoListProps) {
+export default function BookingsInfoList( { bookings, actualDate, rooms, users } : BookingsInfoListProps) {
 
     let check_in = false;
     let check_out = false;
@@ -89,6 +91,9 @@ export default function BookingsInfoList( { bookings, actualDate } : BookingsInf
             {
                 bookings.map( (booking) => {
 
+                    const room = rooms.find( room => room._id === booking.room_id);
+                    const user = users.find( user => user._id === booking.user_id);
+
                     check_in = ( (new Date(booking.check_in).getMonth() + 1) === actualDate.getMonth() ) 
                         && ( new Date(booking.check_in).getFullYear() === actualDate.getFullYear() );
                     check_out = ( (new Date(booking.check_out).getMonth() + 1) === actualDate.getMonth() )
@@ -96,20 +101,22 @@ export default function BookingsInfoList( { bookings, actualDate } : BookingsInf
 
                     if ( check_in || check_out){
                         return (
-                            <BookingsInfo>
+                            <BookingsInfo key={booking._id}>
                                 <div className="image_room"></div>
                                 <div className='body'>
-                                    <div className="title">{booking.room_type_type} - {booking.room_type_number}</div>
+                                    <div className="title">{room?.room_type_type} - {room?.number}</div>
                                     <div className='user'>
                                         <div className="image_user"></div>
-                                        <div className="name">{booking.first_name} {booking.last_name}</div>
+                                        <div className="name">{user?.first_name} {user?.last_name}</div>
                                     </div>
                                 </div>     
                                 {
                                     check_in
                                         ?
                                             <div className="dates check_in">
-                                                { booking.check_in.split("/")[1] }
+                                                {new Date(booking.check_in).getDate()}
+                                                {/* { booking.check_in.split("/")[1] } */}
+                                                {/* { booking.check_in.split("-")[1] } */}
                                             </div>  
                                         : ""
                                 }
@@ -118,7 +125,10 @@ export default function BookingsInfoList( { bookings, actualDate } : BookingsInf
                                     check_out
                                         ?
                                             <div className="dates check_out">
-                                                { booking.check_out.split("/")[1] }
+                                                {new Date(booking.check_out).getDate()}
+                                                {/* { booking.check_out.split("/")[1] } */}
+                                                {/* { booking.check_out.split("-")[1] } */}
+                                                
                                             </div>  
                                         : ""
                                 }                                                    

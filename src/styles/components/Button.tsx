@@ -82,6 +82,28 @@ export const ButtonGreenOutlined = styled(Button)`
 
     &:hover{
         color: #fff;
-        background-color: color: #135846;
+        background-color: #135846;
+    }
+`;
+
+export const ButtonWarning = styled(Button)`
+    color: #FF9C3A;
+    background-color: #804000;
+    // border: 1px solid #FF9C3A;
+
+    &:hover{
+        color: #fff;
+        background-color: #FF9C3A;
+    }
+`;
+
+export const ButtonGreenWhite = styled(Button)`
+    color: ${props => props.theme.green_std};
+    background-color: #fff;
+    border: 1px solid ${props => props.theme.green_std};
+
+    &:hover{
+        color: #fff;
+        background-color: ${props => props.theme.green_std};
     }
 `;

@@ -77,7 +77,7 @@ const IconForm = styled(Icon)`
 `;
 
 export default function EditBooking() {
-    console.log("EDIT BOOKING");
+    // console.log("EDIT BOOKING");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const path = useLocation().pathname;
@@ -85,28 +85,28 @@ export default function EditBooking() {
     const booking_id = pathParts[pathParts.length-1];
     const bookingsState = useSelector(selectBookings);
     const bookings = bookingsState.bookingsList; 
-    console.log(bookings);
+    // console.log(bookings);
     const [booking, setBooking] = useState<any>(
-        bookings.find((booking:Booking) => booking.id === parseInt(booking_id)));
-    console.log("EDIT BOOKING");
-    console.log(booking);
+        bookings.find((booking:Booking) => booking._id === (booking_id)));
+    // console.log("EDIT BOOKING");
+    // console.log(booking);
     // console.log(booking["first_name"]);
 
-    const nameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const name = e.target.value;
-        let newBooking = {...booking};
-        newBooking["first_name"] = name;
-        setBooking(newBooking);
-    }
+    // const nameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const name = e.target.value;
+    //     let newBooking = {...booking};
+    //     newBooking["first_name"] = name;
+    //     setBooking(newBooking);
+    // }
 
-    const lastNameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const lastName = e.target.value;
-        let newBooking = {...booking};
-        newBooking["last_name"] = lastName;
-        setBooking(newBooking);
-    }
+    // const lastNameChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const lastName = e.target.value;
+    //     let newBooking = {...booking};
+    //     newBooking["last_name"] = lastName;
+    //     setBooking(newBooking);
+    // }
 
     const orderDateChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -132,19 +132,19 @@ export default function EditBooking() {
         setBooking(newBooking);
     }
 
-    const roomTypeChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const roomType = e.target.value;
-        let newBooking:Booking = {...booking};
-        newBooking["room_type_type"] = roomType;
-        newBooking["room_type_number"] = "";
-        setBooking(newBooking);
-    }
+    // const roomTypeChangehandler = (e:ChangeEvent<HTMLInputElement>) => {
+    //     e.preventDefault();
+    //     const roomType = e.target.value;
+    //     let newBooking:Booking = {...booking};
+    //     newBooking["room_type_type"] = roomType;
+    //     newBooking["room_type_number"] = "";
+    //     setBooking(newBooking);
+    // }
 
     const handleSubmit = (e:MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        console.log("SUBMIT");
-        console.log(booking);
+        // console.log("SUBMIT");
+        // console.log(booking);
         if (booking["first_name"] && booking["last_name"] && booking["check_in"] && booking["check_out"]
                 && booking["order_date"]){
 
@@ -158,7 +158,7 @@ export default function EditBooking() {
         <MainContainer>
             <Card>
                 {/* FIRST NAME */}
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="userName">First Name</label>
                     <IconForm>
                         <div><i className="fas fa-file-alt"></i></div>
@@ -170,9 +170,9 @@ export default function EditBooking() {
                         : 
                         <input id="userName" name="userName" type="text" onChange={nameChangeHandler} /> 
                     }                                           
-                </FormControl>
+                </FormControl> */}
                 {/* LAST NAME */}
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="userLastName">Last Name</label>
                     <IconForm>
                         <div><i className="fas fa-file-alt"></i></div>
@@ -183,9 +183,9 @@ export default function EditBooking() {
                         : 
                         <input id="userName" name="userName" type="text" onChange={lastNameChangeHandler} /> 
                     }                             
-                </FormControl>
+                </FormControl> */}
                 {/* ORDER DATE */}
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="orderDate">Order Date</label>
                     <IconForm>
                         <div><i className="fas fa-calendar-alt"></i></div>
@@ -196,7 +196,7 @@ export default function EditBooking() {
                         : 
                         <input id="userName" name="userName" type="date" onChange={orderDateChangehandler} /> 
                     }                             
-                </FormControl>
+                </FormControl> */}
                 {/* CHECK IN */}
                 <FormControl>
                     <label htmlFor="checkIn">Check In</label>
@@ -225,7 +225,7 @@ export default function EditBooking() {
                 </FormControl>
                 {/* ROOM TYPE */}
                 
-                <FormControl>
+                {/* <FormControl>
                     <label htmlFor="roomType">Room Type</label>
                     <IconForm>
                         <div><i className="fas fa-tags"></i></div>
@@ -237,7 +237,7 @@ export default function EditBooking() {
                         : 
                         <input id="userName" name="userName" type="text" onChange={roomTypeChangehandler} /> 
                     }                             
-                </FormControl>
+                </FormControl> */}
 
                 <ButtonGreen type="submit" onClick={handleSubmit}>EDIT</ButtonGreen>
             </Card>
