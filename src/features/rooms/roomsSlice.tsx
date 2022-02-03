@@ -25,7 +25,7 @@ export const getRooms: any = createAsyncThunk(
             'Content-Type': 'application/json'  
         }
 
-        return await axios.get(`https://mirandaback2.azurewebsites.net/dashboard/rooms`, headers);
+        return await axios.get(`http://mirandaback2.azurewebsites.net/dashboard/rooms`, headers);
         // return await axios.get("http://localhost:5000/dashboard/rooms", headers);
     }
 )

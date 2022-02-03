@@ -20,7 +20,7 @@ export const getBookings: any = createAsyncThunk(
         const headers: AxiosRequestHeaders =  {
             'Content-Type': 'application/json'  
         }
-        return await axios.get(`https://mirandaback2.azurewebsites.net/dashboard/bookings`, headers);
+        return await axios.get(`http://mirandaback2.azurewebsites.net/dashboard/bookings`, headers);
         // return await axios.get("http://localhost:5000/dashboard/bookings", headers);
     }
 )
