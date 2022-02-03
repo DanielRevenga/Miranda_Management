@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios, { AxiosRequestHeaders } from "axios";
+import 'dotenv/config';
 
 import { bookings_data } from "../../data/bookings_data";
 import { Booking, BookingsState } from "../../interfaces/interfaces";
@@ -19,8 +20,8 @@ export const getBookings: any = createAsyncThunk(
         const headers: AxiosRequestHeaders =  {
             'Content-Type': 'application/json'  
         }
-
-        return await axios.get("http://localhost:5000/dashboard/bookings", headers);
+        return await axios.get(`process.env.AZURE_HOST_NAME:5000/dashboard/bookings`, headers);
+        // return await axios.get("http://localhost:5000/dashboard/bookings", headers);
     }
 )
 
