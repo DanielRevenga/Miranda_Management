@@ -22,6 +22,7 @@ import { selectUsers } from "../../features/users/usersSlice";
 
 
 const StyledDashboard = styled(MainContainer)`
+
     display: grid;
     height: 1500px;
     grid-template: 0.7fr 2.6fr 0.8fr 1.4fr 1.6fr / repeat(4, 1fr);
