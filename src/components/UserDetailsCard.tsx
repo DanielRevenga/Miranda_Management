@@ -1,7 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { selectBookings } from "../features/bookings/bookingsSlice";
 import { ButtonGreen, ButtonSuccess2 } from "../styles/components/Button";
 import { Icon } from "../styles/components/Icon";
+import { useParams } from 'react-router-dom';
+import { selectUsers } from "../features/users/usersSlice";
+import { selectRooms } from "../features/rooms/roomsSlice";
 
 const StyledUserDetailsCard = styled.div`
     background-color: ${props => props.theme.main_color_1};
@@ -33,6 +38,19 @@ const UserProfilephoto = styled.div<UserPorfilePhotoProps>`
     width: 120px;
     border-radius: 12px;
     border: 3px solid #fff;
+`;
+
+const UserProfilePhoto = styled.div`
+    height: 120px;
+    width: 120px;
+    border-radius: 12px;
+    border: 3px solid #fff;
+
+    img{
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+    }
 `;
 
 const HeaderInfo = styled.div`
@@ -180,17 +198,29 @@ const SlideArrows = styled.div`
 
 export default function UserDetailsCard() {
 
+    const params = useParams();
+
+    const bookings = useSelector(selectBookings);
+    const users = useSelector(selectUsers);
+    const rooms = useSelector(selectRooms);
+    const booking:any = bookings.bookingsList.find( booking => booking._id === params.id);
+    const user:any = users.usersList.find( user => user._id === booking.user_id); 
+    const room:any = rooms.roomsList.find( room => room._id === booking.room_id); 
+
+
     return (
         <StyledUserDetailsCard>
             {/* LEFT SIDE */}
             <section>
                 {/* TOP */}
                 <HeaderInfo>
-                    <UserProfilephoto></UserProfilephoto>     
+                    <UserProfilePhoto>
+                        <img src={user.image} alt="" />
+                    </UserProfilePhoto>     
                     <HeaderInfoRight>
                         <div>
-                            <h3>Roberto Mansini</h3>
-                            <h5>ID 1234124512551</h5>
+                            <h3>{ user.first_name } { user.last_name }</h3>
+                            <h5>ID {user._id}</h5>
                         </div>
                         <Contact>
                             <Icon><div><i className="fas fa-phone-alt"></i></div></Icon>
@@ -202,11 +232,11 @@ export default function UserDetailsCard() {
                 <Dates>
                     <div>
                         <h5>Check In</h5>
-                        <h3>October 30th, 2020 | 08:23 AM</h3>
+                        <h3>{ new Date(booking.check_in).toLocaleDateString }</h3>
                     </div>
                     <div>
                         <h5>Check Out</h5>
-                        <h3>November 2th, 2020</h3>
+                        <h3>{ new Date(booking.check_out).toLocaleDateString }</h3>
                     </div>
                 </Dates>
 
@@ -216,29 +246,20 @@ export default function UserDetailsCard() {
                 <RoomInfo>
                     <div>
                         <h5>Room Info</h5>
-                        <h3 className="title">Deluxe Z - 002424</h3>
+                        <h3 className="title">{room.room_type_type} - {room.room_type_number}</h3>
                     </div>
                     <div>
                         <h5>Price</h5>
-                        <h3 className="title">$145 <span>&nbsp;&nbsp;/night</span></h3>
+                        <h3 className="title">$ {room.price} <span>&nbsp;&nbsp;/night</span></h3>
                     </div>
                 </RoomInfo>
 
                 <p>
-                    Lorem ipsum dolor sit amet consectetur, 
-                    adipisicing elit. Recusandae, repudiandae 
-                    fugiat illum modi harum omnis dolor totam nisi 
-                    culpa quibusdam distinctio doloribus impedit rem eveniet,
-                    obcaecati nostrum eligendi iste soluta!
-                    Lorem ipsum dolor sit amet consectetur, 
-                    adipisicing elit. Recusandae, repudiandae 
-                    fugiat illum modi harum omnis dolor totam nisi 
-                    culpa quibusdam distinctio doloribus impedit rem eveniet,
-                    obcaecati nostrum eligendi iste soluta!
+                    {booking.special_request}
                 </p>
 
                 <Facilities>
-                    <h3>Facilities</h3>
+                    <h3>Amenities</h3>
                     <ButtonSuccess2><i className="fas fa-bed"></i> 3 bed Space</ButtonSuccess2>
                     <ButtonSuccess2><i className="fas fa-shield-alt"></i> 24 Hours Guard</ButtonSuccess2>
                     <ButtonSuccess2><i className="fas fa-wifi"></i> free Wifi</ButtonSuccess2>

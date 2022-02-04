@@ -13,14 +13,13 @@ const MyButtonPagList = styled.div`
 
 export default function ButtonPagList({ setPage, maxPage }: ButtonPagListProps) {
 
-    console.log("maxPAge", maxPage);
     return (
         <MyButtonPagList>
 
             {
                 [...Array(maxPage)].map((el, index) => {
                     return (
-                        <ButtonGreenWhite onClick={() => setPage(index+1)}>
+                        <ButtonGreenWhite key={index+1} onClick={() => setPage(index+1)}>
                             {index+1}
                         </ButtonGreenWhite>
                     )
