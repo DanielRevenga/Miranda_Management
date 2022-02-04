@@ -8,6 +8,8 @@ import { ButtonInfo, ButtonSuccess, ButtonError, ButtonWarning } from '../styles
 import { Flex } from '../styles/components/Flex';
 import { Booking, Room, User } from '../interfaces/interfaces';
 import { ItemTypes } from './ItemTypes';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const StyledFlex = styled(Flex)`
     & > div:nth-of-type(1) {
@@ -45,7 +47,7 @@ interface BookingCardProps {
 
 export function BookingCard ({ key, id, index, user, room, order_date, check_in, 
     check_out, special_request, moveCard, booking }: BookingCardProps) {
-
+        
     const dispatch = useDispatch();
     const ref = useRef<any>(null);
     const [{ handlerId }, drop] = useDrop({
@@ -110,12 +112,14 @@ export function BookingCard ({ key, id, index, user, room, order_date, check_in,
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
-    function deleteHandler() {
+    const deleteHandler = async (booking: Booking) => {
         dispatch(deleteBooking(booking));
+        toast.success("Booking DELETED successfully!");
+        await axios.delete(`http://localhost:5000/dashboard/bookings/${ booking._id }`);    
     }
 
     return (
-        <tr key={id} ref={ref} style={{opacity}} data-handler-id={handlerId} >
+        <tr key={id} ref={ref} style={{opacity}} data-handler-id={handlerId}>
 			<td>
                 <StyledFlex align="center">
                     <div>
@@ -143,11 +147,14 @@ export function BookingCard ({ key, id, index, user, room, order_date, check_in,
                 : ""
             }
             <td className="status">
-            { booking.status==="check in" ? <Link to={"/editBooking/"+booking._id}><ButtonSuccess>Check In</ButtonSuccess></Link> : "" }
-            { booking.status==="check out" ? <Link to={"/editBooking/"+booking._id}><ButtonError>Check Out</ButtonError></Link> : "" }
-            { booking.status==="in progress" ? <Link to={"/editBooking/"+booking._id}><ButtonWarning>In Progress</ButtonWarning></Link> : "" }
+            { booking.status==="check in" ? <Link to={""}><ButtonSuccess>Check In</ButtonSuccess></Link> : "" }
+            { booking.status==="check out" ? <Link to={""}><ButtonError>Check Out</ButtonError></Link> : "" }
+            { booking.status==="in progress" ? <Link to={""}><ButtonWarning>In Progress</ButtonWarning></Link> : "" }
             </td>
-            <td><i onClick={deleteHandler} className="fas fa-ellipsis-v"></i></td>
+            <td>
+                <Link to={`/bookings/bookingDetails/${ booking._id }`}><i className="fas fa-info-circle edit"></i></Link>
+                <i onClick={() => deleteHandler(booking)} className="fas fa-trash-alt delete"></i>
+            </td>
 		</tr>
         );
 };

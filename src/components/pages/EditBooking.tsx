@@ -77,7 +77,6 @@ const IconForm = styled(Icon)`
 `;
 
 export default function EditBooking() {
-    // console.log("EDIT BOOKING");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const path = useLocation().pathname;
@@ -143,8 +142,7 @@ export default function EditBooking() {
 
     const handleSubmit = (e:MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        // console.log("SUBMIT");
-        // console.log(booking);
+
         if (booking["first_name"] && booking["last_name"] && booking["check_in"] && booking["check_out"]
                 && booking["order_date"]){
 

@@ -18,13 +18,13 @@ import BookingsInfoList from '../BookingsInfoList';
 import { getBookings, selectBookings } from "../../features/bookings/bookingsSlice";
 import axios from "axios";
 import { getRooms, selectRooms } from "../../features/rooms/roomsSlice";
-import { selectUsers } from "../../features/users/usersSlice";
+import { getUsers, selectUsers } from "../../features/users/usersSlice";
 
 
 const StyledDashboard = styled(MainContainer)`
 
     display: grid;
-    height: 1500px;
+    height: 1700px;
     grid-template: 0.7fr 2.6fr 0.8fr 1.4fr 1.6fr / repeat(4, 1fr);
     gap: 2%;
 
@@ -165,6 +165,8 @@ const Card = styled.div< CardProps >`
     h2{
         width: 100%;
         margin-bottom: 30px;
+        font-size: 1.4rem;
+        margin-left: 40px;
     }
     
     h3{
@@ -277,28 +279,13 @@ const GraphLegend = styled.nav`
 
 function Dashboard() {
 
-    const dispatch = useDispatch();
-    const getStates = async() => { 
-        await dispatch(getBookings());
-        await dispatch(getRooms());
-        await dispatch(getContacts());
-        // await dispatch(getUsers());
-    }   
-    useEffect( () => {
-        const getStates2 = async() => {
-            await getStates();
-
-        }
-
-        getStates2();
-    }, []);
 
     // GET STATES
-    const contactsState = useSelector(selectContacts);
     const bookingsState = useSelector(selectBookings);
     const roomsState = useSelector(selectRooms);
+    const contactsState = useSelector(selectContacts);
     const usersState = useSelector(selectUsers);
-    
+ 
     const [actualDate, setActualDate] = useState(new Date());
 
     const [contacts, setContacts] = useState<Contact[]>(contactsState.contactsList);
@@ -306,6 +293,10 @@ function Dashboard() {
     const [rooms, setRooms] = useState<Room[]>(roomsState.roomsList);
     const [users, setUsers] = useState<User[]>(usersState.usersList);
 
+    useEffect( () => {
+        setContacts(contactsState.contactsList);
+        setRooms(roomsState.roomsList);
+    }, [contactsState, roomsState])
 
     return (<>
         <StyledDashboard>
@@ -377,11 +368,11 @@ function Dashboard() {
                 <BookingsInfoList 
                     bookings={ bookings }
                     actualDate={actualDate}
-                    rooms={rooms}
-                    users={users} />
+                    rooms={ rooms }
+                    users={ users } />
             </Card>
             <Card column="1" columnSpan="4" display="flex" justify="space-between">
-                <h2 className="w100">Latest Reviews by Customers</h2>
+                <h2 className="w100 p30">Latest Reviews by Customers</h2>
 
                 <DashboardReviewsList contacts={ contacts } />
             </Card>

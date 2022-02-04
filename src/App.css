@@ -1,0 +1,12 @@
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    font-size: 0.9rem;
+}
+
+.alignLeft{
+    text-align: left !important;
+}
