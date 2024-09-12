@@ -2,6 +2,7 @@ export interface Room {
     _id: string;
     number: number;
     room_type_type: string;
+    room_type_number: number;
     amenities: string;
     price: number;
     offer_price: number;

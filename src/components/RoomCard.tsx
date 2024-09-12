@@ -1,9 +1,14 @@
+import axios from 'axios';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { deleteBooking } from '../features/bookings/bookingsSlice';
-import { ButtonSuccess } from '../styles/components/Button';
+import { deleteRoom } from '../features/rooms/roomsSlice';
+import { Room } from '../interfaces/interfaces';
+import { ButtonError, ButtonSuccess } from '../styles/components/Button';
 import { Flex } from '../styles/components/Flex';
 import { ItemTypes } from './ItemTypes';
 
@@ -28,8 +33,8 @@ const StyledFlex = styled(Flex)`
     
 `;
 
-export function RoomCard ({ id, index, number, room_type, amenities, price, offer_price, 
-    status, img, moveCard, room }: any) {
+export function RoomCard ({ id, index, number, room_type_type, room_type_number, amenities, price, offer_price, 
+    status, img, moveCard, room, setFilteredRooms }: any) {
 
     const dispatch = useDispatch();
     const ref = useRef<any>(null);
@@ -93,8 +98,12 @@ export function RoomCard ({ id, index, number, room_type, amenities, price, offe
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
-    function deleteHandler() {
-        dispatch(deleteBooking(room));
+    const deleteHandler = async(room: Room) =>  {
+        dispatch(deleteRoom(room));
+        toast.success("Room DELETED successfully!");
+        await axios.delete(`http://localhost:5000/dashboard/rooms/${ room._id }`);  
+        //@ts-ignore
+        setFilteredRooms( last => last.filter( r => r._id !== room._id))   
     }
 
     return (
@@ -110,12 +119,18 @@ export function RoomCard ({ id, index, number, room_type, amenities, price, offe
                     </div>
                 </StyledFlex>
             </td>
-            <td>{room_type}</td>
+            <td>{room_type_type} - {room_type_number}</td>
             <td>{amenities}</td>
             <td>{price}</td>
             <td>{offer_price}</td>
-            <td><ButtonSuccess>{status}</ButtonSuccess></td>
-            <td><i onClick={deleteHandler} className="fas fa-ellipsis-v"></i></td>
+            <td className="status">
+                { status==="available" ? <Link to={""}><ButtonSuccess>Available</ButtonSuccess></Link> : "" }
+                { status==="occupied" ? <Link to={""}><ButtonError>Occupied</ButtonError></Link> : "" }
+            </td>    
+            <td>
+                <Link to={`/users/editRoom/${ room._id }`}><i className="fas fa-edit edit"></i></Link>
+                <i onClick={() => deleteHandler(room)} className="fas fa-trash-alt delete"></i>
+            </td>
 		</tr>
         );
 };

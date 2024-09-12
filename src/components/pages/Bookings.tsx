@@ -46,8 +46,37 @@ const StyledTable = styled.table`
     }
 
     tbody{
-        td{
+        tr{
+            height: 100px;
+        }
+        td{          
             border-bottom: 1px solid ${props => props.theme.grey_std};
+
+            &:last-child{
+                width: 10%;
+                font-size: 1.4rem;
+
+                i{
+                    margin-right: 15px;                 
+
+                    &.delete{                      
+                        color: #E2342826;
+                        margin-right: 0;
+
+                        &:hover{
+                            color: ${ props => props.theme.red_std };
+                        }
+                    }
+
+                    &.edit{
+                        color: ${ props => props.theme.green_std };
+
+                        &:hover{
+                            color: #5AD07A;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -209,8 +238,11 @@ export default function Bookings() {
     const roomsState = useSelector(selectRooms);
     const usersState = useSelector(selectUsers);
     const bookings = bookingsState.bookingsList;
-    const rooms = roomsState.roomsList;
-    const users = usersState.usersList;
+    const rooms_ = roomsState.roomsList;
+    const users_ = usersState.usersList;
+
+    const [rooms, setRooms] = useState(rooms_);
+    const [users, setUsers] = useState(users_);
 
     const [filterStatus, setFilterStatus] = useState("all");
     const [filterAge, setFilterAge] = useState("newest");
@@ -237,14 +269,15 @@ export default function Bookings() {
     }, [cards, bookings]);
 
     useEffect( () => {
+        setUsers(usersState.usersList);
+        setRooms(roomsState.roomsList);
+    }, [usersState, roomsState])
+
+    useEffect( () => {
         if (bookings.length){
             let filteredBookings_ = ([...bookings]);
             if (filterAge === "newest") filteredBookings_.sort((a,b)=>new Date(a.order_date).getTime()-new Date(b.order_date).getTime());
             if (filterAge === "oldest") filteredBookings_.sort((a,b)=>new Date(b.order_date).getTime()-new Date(a.order_date).getTime());
-            
-            // filteredBookings = filteredBookings.slice( firstBookingIndex, lastBookingIndex );
-            console.log("filteredBookings");
-            console.log(filteredBookings_);
 
             if (filterStatus === "check_in"){
                 // setFilteredBookings(filteredBookings.filter(booking => booking.status === "check in"));
@@ -259,8 +292,7 @@ export default function Bookings() {
             }else{
                 setCards(filteredBookings_);
             }
-            // console.log("object");
-            console.log("LENGTH: ",filteredBookings_.length);
+            
             setMaxPage(Math.ceil( filteredBookings_.length / maxBookingPerPage ));
             setFilteredBookings(filteredBookings_);
             
@@ -290,19 +322,16 @@ export default function Bookings() {
 
     const changeAgeSelectHandler = (e:any) => {
         setFilterAge(e.target.value);
-        console.log(e.target.value);
     }
 
     const leftControllerHandler = () => {
         if ( page === 1 ) return;
         setPage( last => last - 1);
-        console.log("page",page);
     }
 
     const rightControllerHandler = () => {
-        if ( page >= filteredBookings.length / maxBookingPerPage || filteredBookings.length < 10 ) return;
+        if ( page >= filteredBookings.length / maxBookingPerPage || filteredBookings.length < maxBookingPerPage ) return;
         setPage( last => last + 1);
-        console.log("page",page);
     }
 
     return (
@@ -338,10 +367,10 @@ export default function Bookings() {
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </SelectGreen>
-                    <SelectGreen onChange={changeAgeSelectHandler} value={filterAge}>
+                    <SelectGreenOutlined onChange={changeAgeSelectHandler} value={filterAge}>
                         <option value="newest">Order By Newest</option>
                         <option value="oldest">Order By Oldest</option>
-                    </SelectGreen>
+                    </SelectGreenOutlined>
                 </div>
             </FilterStateNav>
 
@@ -362,15 +391,17 @@ export default function Bookings() {
 
                 {/* TABLE BODY */}
                 <tbody>
-                    {cards
-                        .slice( firstBookingIndex, lastBookingIndex )
-                        .map((card:Booking, i:number) => renderCard(card, i))}
+                    {
+                        cards
+                            .slice( firstBookingIndex, lastBookingIndex )
+                            .map((card:Booking, i:number) => renderCard(card, i))
+                    }
                 </tbody>
             </StyledTable>
 
             <Pagination>
                 <div className="info">
-                    1234
+                    {/* 1234 */}
                 </div>
                 <div className="controllers">
                     {
@@ -400,7 +431,7 @@ export default function Bookings() {
                         </ButtonGreenWhite> */}
                     </div>
                     {
-                        page >= filteredBookings.length / maxBookingPerPage || filteredBookings.length < 10
+                        page >= filteredBookings.length / maxBookingPerPage || filteredBookings.length < maxBookingPerPage
                         ?
                             <ButtonGreenOutlined onClick={rightControllerHandler} className="hidden">
                                 Next

@@ -25,8 +25,8 @@ export const getContacts: any = createAsyncThunk(
             'Content-Type': 'application/json'  
         }
 
-        return await axios.get(`http://mirandaback2.azurewebsites.net/dashboard/contacts`, headers);
-        // return await axios.get("http://localhost:5000/dashboard/contacts", headers);
+        // return await axios.get(`http://mirandaback2.azurewebsites.net/dashboard/contacts`, headers);
+        return await axios.get("http://localhost:5000/dashboard/contacts", headers);
     }
 )
 
